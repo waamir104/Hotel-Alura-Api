@@ -13,10 +13,10 @@ spring:
     generate-ddl: true
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
     properties:
       hibernate:
-        format-sql: true
+        format_sql: true
         
 server:
   port: 8090
