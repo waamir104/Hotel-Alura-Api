@@ -9,7 +9,7 @@ public interface IRoomRepository<T extends Room> {
     T create(T t);
     Optional<T> getById(int id);
     Optional<T> getByNumber(int number);
-    void delete();
+    void delete(T t);
     void update(T t);
     List<T> list();
 }

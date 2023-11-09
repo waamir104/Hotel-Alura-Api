@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface IRoomTypeRepository<T extends RoomType> {
     T create(T t);
     Optional<T> getById(int id);
-    void delete();
+    void delete(T t);
     void update(T t);
     List<T> list();
 }

@@ -7,9 +7,9 @@ import java.util.Optional;
 
 public interface IGuestRepository<T extends Guest> {
     T create(T t);
-    Optional<T> getById(int id);
+    Optional<T> getById(Long id);
     Optional<T> getByEmail(String email);
-    void delete();
+    void delete(T t);
     void update(T t);
     List<T> list();
 }
