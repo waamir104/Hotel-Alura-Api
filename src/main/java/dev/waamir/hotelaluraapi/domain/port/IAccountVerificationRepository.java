@@ -8,6 +8,6 @@ import java.util.Optional;
 public interface IAccountVerificationRepository<T extends AccountVerification> {
     T create(T t);
     Optional<T> getByUser(User user);
-    void deleteById(Long id);
+    void delete();
     void update(T t);
 }

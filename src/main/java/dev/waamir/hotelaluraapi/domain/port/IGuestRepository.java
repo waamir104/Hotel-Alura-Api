@@ -9,7 +9,7 @@ public interface IGuestRepository<T extends Guest> {
     T create(T t);
     Optional<T> getById(int id);
     Optional<T> getByEmail(String email);
-    void deleteById(int id);
+    void delete();
     void update(T t);
     List<T> list();
 }
