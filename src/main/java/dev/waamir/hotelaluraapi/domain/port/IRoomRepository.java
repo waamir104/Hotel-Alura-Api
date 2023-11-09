@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface IRoomRepository<T extends Room> {
     T create(T t);
-    Optional<T> getById(int id);
+    Optional<T> getById(Long id);
     Optional<T> getByNumber(int number);
     void delete(T t);
     void update(T t);

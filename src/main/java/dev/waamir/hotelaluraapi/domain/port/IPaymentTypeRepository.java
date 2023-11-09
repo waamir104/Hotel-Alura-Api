@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface IPaymentTypeRepository<T extends PaymentType> {
     T create(T t);
-    Optional<T> getById(int id);
+    Optional<T> getById(Long id);
     void delete(T t);
     void update(T t);
     List<T> list();
