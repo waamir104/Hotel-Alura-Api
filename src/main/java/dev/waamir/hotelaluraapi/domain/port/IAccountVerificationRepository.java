@@ -6,8 +6,8 @@ import dev.waamir.hotelaluraapi.domain.model.User;
 import java.util.Optional;
 
 public interface IAccountVerificationRepository<T extends AccountVerification> {
-    T create(T t);
+    T create(T accountVerification);
     Optional<T> getByUser(User user);
-    void delete(T t);
-    void update(T t);
+    void delete(T accountVerification);
+    void update(T accountVerification);
 }

@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IBookingPaymentTypeRepository<T extends BookingPaymentType> {
-        T create(T t);
+        T create(T bookingPaymentType);
         List<T> listByBooking(Booking booking);
         Optional<T> getById(Long id);
-        void delete(T t);
-        void update(T t);
+        void delete(T bookingPaymentType);
+        void update(T bookingPaymentType);
 }

@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IRoleRepository<T extends Role> {
-    T create(T t);
+    T create(T role);
     Optional<T> getById(Long id);
-    void delete(T t);
-    void update(T t);
+    void delete(T role);
+    void update(T role);
     List<T> list();
 }
