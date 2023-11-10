@@ -9,6 +9,6 @@ import dev.waamir.hotelaluraapi.domain.model.RoomType;
 
 public interface IRoomTypeJpaRepository extends JpaRepository<RoomType, Long>{
     
-    @Query("SELECT * FROM room_types WHERE room_type_id = :id")
+    @Query("SELECT rt FROM RoomType rt WHERE rt.id = :id")
     Optional<RoomType> findById(Long id);
 }

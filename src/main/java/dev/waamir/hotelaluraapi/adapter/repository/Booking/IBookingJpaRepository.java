@@ -10,6 +10,6 @@ import java.util.Optional;
 @Repository
 public interface IBookingJpaRepository extends JpaRepository<Booking, Long> {
     
-    @Query("SELECT * FROM bookings WHERE booking_id = :id")
+    @Query("SELECT b FROM Booking b WHERE b.id = :id")
     Optional<Booking> findById(Long id);
 }

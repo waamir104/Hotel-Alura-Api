@@ -9,6 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface IPaymentTypeJpaRepository extends JpaRepository<PaymentType, Long> {
     
-    @Query("SELECT * FROM payment_types WHERE payment_type_id = :id")
+    @Query("SELECT pt FROM PaymentType pt WHERE pt.id = :id")
     Optional<PaymentType> findById(Long id);
 }

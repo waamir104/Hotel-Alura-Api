@@ -11,9 +11,9 @@ import dev.waamir.hotelaluraapi.domain.model.BookingPaymentType;
 
 public interface IBookingPaymentTypeJpaRepository extends JpaRepository<BookingPaymentType, Long> {
     
-    @Query("SELECT * FROM booking_payment_types WHERE booking_id = :booking.id")
+    @Query("SELECT bpt FROM BookingPaymentType bpt WHERE bpt.booking = :booking")
     List<BookingPaymentType> findByBooking(Booking booking);
     
-    @Query("SELECT * FROM booking_payment_types WHERE booking_payment_type_id = :id")
+    @Query("SELECT bpt FROM BookingPaymentType bpt WHERE bpt.id = :id")
     Optional<BookingPaymentType> findById(Long id);
 }
