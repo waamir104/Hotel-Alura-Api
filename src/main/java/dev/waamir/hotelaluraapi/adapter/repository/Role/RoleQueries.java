@@ -28,5 +28,9 @@ public class RoleQueries {
             SELECT role_id as id, name, permissions FROM roles 
             WHERE role_id IN (SELECT role_id FROM users
                                 WHERE user_id = :user_id);
-            """;        
+            """;       
+    public static final String SELECT_ROLE_BY_NAME_QUERY = """
+            SELECT role_id as id, name, permissions FROM roles
+            WHERE name = :name;
+            """; 
 }

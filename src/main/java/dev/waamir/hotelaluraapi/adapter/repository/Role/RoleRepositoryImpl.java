@@ -53,6 +53,16 @@ public class RoleRepositoryImpl implements IRoleRepository<Role>{
     }
 
     @Override
+    public Optional<Role> getByName(String name) {
+        try {
+            SqlParameterSource parameter = new MapSqlParameterSource().addValue("name", name);
+            return Optional.of(jdbc.queryForObject(SELECT_ROLE_BY_NAME_QUERY, parameter, new BeanPropertyRowMapper<>(Role.class)));
+        } catch (Exception e) {
+            throw new ApiException("Role not found. Please try again.");
+        }
+    }
+
+    @Override
     public void delete(Role role) {
         try {
             SqlParameterSource parameter = new MapSqlParameterSource().addValue("id", role.getId());
