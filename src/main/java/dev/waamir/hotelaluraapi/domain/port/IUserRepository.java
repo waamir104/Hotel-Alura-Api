@@ -12,4 +12,5 @@ public interface IUserRepository<T extends User> {
     void delete(T user);
     void update(T user);
     List<T> list();
+    void enable(String type, String userIdEncoded, String url);
 }
