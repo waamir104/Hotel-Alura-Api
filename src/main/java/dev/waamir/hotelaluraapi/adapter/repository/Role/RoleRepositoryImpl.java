@@ -99,7 +99,7 @@ public class RoleRepositoryImpl implements IRoleRepository<Role>{
         try {
             SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("user_id", user.getId());
-            return Optional.of(jdbc.queryForObject(SELECT_ROLE_BY_USER, parameters, new BeanPropertyRowMapper<>(Role.class)));
+            return Optional.of(jdbc.queryForObject(SELECT_ROLE_BY_USER_QUERY, parameters, new BeanPropertyRowMapper<>(Role.class)));
         } catch (Exception e) {
             throw new ApiException("Role not found. Please try again.");
         }
