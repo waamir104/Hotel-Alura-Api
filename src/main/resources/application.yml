@@ -7,6 +7,18 @@ spring:
     url: jdbc:mysql://localhost:3310/hotel_alura
     username: root
     password: 
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: # username to login within the email account
+    password: # password to login within the email account
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
     
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
