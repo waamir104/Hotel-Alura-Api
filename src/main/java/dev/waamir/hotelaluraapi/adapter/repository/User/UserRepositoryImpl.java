@@ -18,10 +18,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import dev.waamir.hotelaluraapi.application.model.EmailDetails;
 import dev.waamir.hotelaluraapi.domain.model.AccountVerification;
 import dev.waamir.hotelaluraapi.domain.model.Role;
 import dev.waamir.hotelaluraapi.domain.model.User;
 import dev.waamir.hotelaluraapi.domain.port.IAccountVerificationRepository;
+import dev.waamir.hotelaluraapi.domain.port.IEmailService;
 import dev.waamir.hotelaluraapi.domain.port.IRoleRepository;
 import dev.waamir.hotelaluraapi.domain.port.IUserRepository;
 import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.ApiException;
@@ -41,6 +43,7 @@ public class UserRepositoryImpl implements IUserRepository<User>{
     private final Encoder encoder; 
     private final Decoder decoder;
     private final IAccountVerificationRepository<AccountVerification> accountVerificationRepository;
+    private final IEmailService emailService;
 
     @Override
     public User create(User user) {
@@ -60,7 +63,10 @@ public class UserRepositoryImpl implements IUserRepository<User>{
             newAccountVerification.setUrl(verificationUrl);
             newAccountVerification.setUser(user);
             accountVerificationRepository.create(newAccountVerification);
-            // TODO Send verification email with url
+            
+            EmailDetails emailDetails = new EmailDetails(user.getUsername(), emailService.getConfirmationMessage(verificationUrl  ), "Confirm Account");
+            emailService.sendEmail(emailDetails);
+
             return user;
         } catch (Exception e) {
             throw new ApiException("An error ocurred creating the user. Please try again.");
