@@ -38,7 +38,7 @@ public class RoleRepositoryImpl implements IRoleRepository<Role>{
             role.setId(Objects.requireNonNull(holder.getKey()).longValue());
             return role;
         } catch (Exception e) {
-            throw new ApiException("An error occured creating the role. Please try again.");
+            throw new ApiException("An error occured creating the role. Please try again. \n\n" + e.getMessage());
         }
     }
 
@@ -48,7 +48,7 @@ public class RoleRepositoryImpl implements IRoleRepository<Role>{
             SqlParameterSource parameter = new MapSqlParameterSource().addValue("id", id);
             return Optional.of(jdbc.queryForObject(SELECT_ROLE_BY_ID_QUERY, parameter, new BeanPropertyRowMapper<>(Role.class)));
         } catch (Exception e) {
-            throw new ApiException("Role not found. Please try again.");
+            throw new ApiException("Role not found. Please try again. \n\n" + e.getMessage());
         }
     }
 
@@ -58,7 +58,7 @@ public class RoleRepositoryImpl implements IRoleRepository<Role>{
             SqlParameterSource parameter = new MapSqlParameterSource().addValue("name", name);
             return Optional.of(jdbc.queryForObject(SELECT_ROLE_BY_NAME_QUERY, parameter, new BeanPropertyRowMapper<>(Role.class)));
         } catch (Exception e) {
-            throw new ApiException("Role not found. Please try again.");
+            throw new ApiException("Role not found. Please try again. \n\n" + e.getMessage());
         }
     }
 
@@ -68,7 +68,7 @@ public class RoleRepositoryImpl implements IRoleRepository<Role>{
             SqlParameterSource parameter = new MapSqlParameterSource().addValue("id", role.getId());
             jdbc.update(DELETE_ROLE_QUERY, parameter);
         } catch (Exception e) {
-            throw new ApiException("An error ocurred deleting the role. Please try again.");
+            throw new ApiException("An error ocurred deleting the role. Please try again. \n\n" + e.getMessage());
         }
     }
 
@@ -81,7 +81,7 @@ public class RoleRepositoryImpl implements IRoleRepository<Role>{
                 .addValue("permissions", role.getPermissions());
             jdbc.update(UPDATE_ROLE_QUERY, parameters);
         } catch (Exception e) {
-            throw new ApiException("An error occured updating the role. Please try again.");
+            throw new ApiException("An error occured updating the role. Please try again. \n\n" + e.getMessage());
         }
     }
 
@@ -90,7 +90,7 @@ public class RoleRepositoryImpl implements IRoleRepository<Role>{
         try {
             return jdbc.query(SELECT_ALL_ROLES_QUERY, new MapSqlParameterSource(), new BeanPropertyRowMapper<>(Role.class));
         } catch (Exception e) {
-            throw new ApiException("An error occured listing the roles. Please try again.");
+            throw new ApiException("An error occured listing the roles. Please try again. \n\n" + e.getMessage());
         }
     }
 
@@ -101,7 +101,7 @@ public class RoleRepositoryImpl implements IRoleRepository<Role>{
                 .addValue("user_id", user.getId());
             return Optional.of(jdbc.queryForObject(SELECT_ROLE_BY_USER_QUERY, parameters, new BeanPropertyRowMapper<>(Role.class)));
         } catch (Exception e) {
-            throw new ApiException("Role not found. Please try again.");
+            throw new ApiException("Role not found. Please try again. \n\n" + e.getMessage());
         }
     }
 }
