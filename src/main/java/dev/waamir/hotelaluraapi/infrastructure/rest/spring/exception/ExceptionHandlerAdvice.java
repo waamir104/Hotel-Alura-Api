@@ -21,10 +21,10 @@ public class ExceptionHandlerAdvice {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<List> handle400Error(
+    public ResponseEntity<List<DataValidationError>> handle400Error(
         MethodArgumentNotValidException e
     ) {
-        var errors = e
+        List<DataValidationError> errors = e
             .getFieldErrors()
             .stream()
             .map(DataValidationError::new)
