@@ -42,7 +42,7 @@ public class AuthenticationService {
         user = userRepository.create(user);
         String jwt = jwtService.generateJwt(user);
         return AuthenticationResponse.builder()
-            .jwt(jwt)
+            .token(jwt)
             .build();
     }
 
@@ -64,7 +64,7 @@ public class AuthenticationService {
             .orElseThrow(() -> new ApiException("An error occurred processing the authentication of the user."));
         String jwt = jwtService.generateJwt(user);
         return AuthenticationResponse.builder()
-            .jwt(jwt)
+            .token(jwt)
             .build();
     }
     
