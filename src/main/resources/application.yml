@@ -2,6 +2,11 @@ application:
   title: Hotel Alura Api
   version: 1.0
 
+  security:
+    jwt:
+      secret:
+        key: 6e1bd6c726bfbbf91c502b64b90b647aa7c3de9a5b6fd9e93652b7ce63b53b56
+
 spring:
   datasource:
     url: jdbc:mysql://localhost:3310/hotel_alura

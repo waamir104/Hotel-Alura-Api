@@ -37,7 +37,7 @@ public class AccountVerificationRepositoryImpl implements IAccountVerificationRe
             accountVerification.setId(Objects.requireNonNull(holder.getKey()).longValue());
             return accountVerification;
         } catch (Exception e) {
-            throw new ApiException("An error ocurred creating the account verification record. Please try again");
+            throw new ApiException("An error ocurred creating the account verification record. Please try again \n\n" + e.getMessage());
         }
     }
 
@@ -49,7 +49,7 @@ public class AccountVerificationRepositoryImpl implements IAccountVerificationRe
             AccountVerification wantedAccountVerification = Objects.requireNonNull(jdbc.queryForObject(SELECT_ACCOUNT_VERIFICATION_BY_USER_QUERY, parameters, new BeanPropertyRowMapper<>(AccountVerification.class)));
             return Optional.of(wantedAccountVerification);
         } catch (Exception e) {
-            throw new ApiException("An error ocurred creating the account verification record. Please try again");
+            throw new ApiException("An error ocurred creating the account verification record. Please try again \n\n" + e.getMessage());
         }
     }
     

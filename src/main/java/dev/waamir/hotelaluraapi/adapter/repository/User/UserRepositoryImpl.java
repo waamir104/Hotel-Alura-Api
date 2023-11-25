@@ -69,7 +69,7 @@ public class UserRepositoryImpl implements IUserRepository<User>{
 
             return user;
         } catch (Exception e) {
-            throw new ApiException("An error ocurred creating the user. Please try again.");
+            throw new ApiException("An error ocurred creating the user. Please try again. \n\n" + e.getMessage());
         }
     }
 
@@ -81,7 +81,7 @@ public class UserRepositoryImpl implements IUserRepository<User>{
             wantedUser.setRole(wantedRole);
             return Optional.of(wantedUser);
         } catch (Exception e) {
-            throw new ApiException("User not found. Please try again.");
+            throw new ApiException("User not found. Please try again. \n\n" + e.getMessage());
         }
     }
     
@@ -93,7 +93,7 @@ public class UserRepositoryImpl implements IUserRepository<User>{
             wantedUser.setRole(wantedRole);
             return Optional.of(wantedUser);
         } catch (Exception e) {
-            throw new ApiException("User not found. Please try again.");
+            throw new ApiException("User not found. Please try again. \n\n" + e.getMessage());
         }
     }
 
@@ -102,7 +102,7 @@ public class UserRepositoryImpl implements IUserRepository<User>{
         try {
             jdbc.update(DELETE_USER_QUERY, Map.of("id", user.getId()));
         } catch (Exception e) {
-            throw new ApiException("An error ocurred deleting the user. Please try again.");
+            throw new ApiException("An error ocurred deleting the user. Please try again. \n\n" + e.getMessage());
         }
     }
 
@@ -115,7 +115,7 @@ public class UserRepositoryImpl implements IUserRepository<User>{
                 .addValue("id", user.getId());
             jdbc.update(UPDATE_USER_QUERY, parameters);
         } catch (Exception e) {
-            throw new ApiException("An error ocurred updating the user. Please try again.");
+            throw new ApiException("An error ocurred updating the user. Please try again. \n\n" + e.getMessage());
         }
     }
 
@@ -124,7 +124,7 @@ public class UserRepositoryImpl implements IUserRepository<User>{
         try {
             return jdbc.query(SELECT_ALL_USERS_QUERY, new MapSqlParameterSource(), new BeanPropertyRowMapper<>(User.class));
         } catch (Exception e) {
-            throw new ApiException("An error ocurred listing the users. Please try again.");
+            throw new ApiException("An error ocurred listing the users. Please try again. \n\n" + e.getMessage());
         }
     }
 
@@ -140,7 +140,7 @@ public class UserRepositoryImpl implements IUserRepository<User>{
                 update(user);
             }
         } catch (Exception e) {
-            throw new ApiException("An error ocurred enabling user. Please try again.");
+            throw new ApiException("An error ocurred enabling user. Please try again. \n\n" + e.getMessage());
         }
     }
     
