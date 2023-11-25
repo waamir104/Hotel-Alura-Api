@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import dev.waamir.hotelaluraapi.adapter.dto.AuthenticationResource.AuthenticationResponse;
 import dev.waamir.hotelaluraapi.adapter.dto.User.UserRequest;
 import dev.waamir.hotelaluraapi.application.service.AuthenticationService.AuthenticationService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -19,6 +20,7 @@ public class AuthenticationResource {
     private final AuthenticationService authService;
     
     @PostMapping("/register")
+    @Transactional
     public ResponseEntity<AuthenticationResponse> register(
         @RequestBody UserRequest userRequest
     ) {
