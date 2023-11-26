@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import dev.waamir.hotelaluraapi.adapter.dto.exception.DataValidationError;
-import dev.waamir.hotelaluraapi.adapter.dto.exception.ErrorMessage;
+import dev.waamir.hotelaluraapi.adapter.dto.resource.MessageResponse;
 
 import java.util.List;
 
@@ -33,11 +33,11 @@ public class ExceptionHandlerAdvice {
     }
 
     @ExceptionHandler(DisabledException.class)
-    public ResponseEntity<ErrorMessage> handleUserDiasbled() {
+    public ResponseEntity<MessageResponse> handleUserDiasbled() {
         return ResponseEntity
             .status(HttpStatusCode.valueOf(403))
             .body(
-                ErrorMessage.builder()
+                MessageResponse.builder()
                     .message("User is disabled. Please verify the account or contact the admin.")
                     .build()
             );
