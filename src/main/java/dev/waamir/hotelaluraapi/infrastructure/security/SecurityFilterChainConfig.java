@@ -16,12 +16,12 @@ import lombok.RequiredArgsConstructor;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class SecurityConfig {
+public class SecurityFilterChainConfig {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
         
-    private static final String[] WHITE_LIST_URLS = {"/api/v1/auth/**"};
+    private static final String[] WHITE_LIST_URLS = {"/api/v1/user/**"};
 
     @Bean
     public SecurityFilterChain securityFilterCHain(HttpSecurity http) throws Exception {
