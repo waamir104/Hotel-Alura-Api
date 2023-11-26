@@ -149,7 +149,7 @@ public class UserRepositoryImpl implements IUserRepository<User>{
     }
 
     private String getVerificationUrl(String key, String type) {
-        return ServletUriComponentsBuilder.fromCurrentContextPath().path("/user/verify/" + type + "/" + key).toUriString();
+        return ServletUriComponentsBuilder.fromCurrentContextPath().path("api/v1/user/verify/" + type + "/" + key).toUriString();
     }
 
     private String encode(String id) {
