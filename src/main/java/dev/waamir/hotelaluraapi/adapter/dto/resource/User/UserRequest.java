@@ -1,4 +1,4 @@
-package dev.waamir.hotelaluraapi.adapter.dto.User;
+package dev.waamir.hotelaluraapi.adapter.dto.resource.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package dev.waamir.hotelaluraapi.adapter.dto.exception;
+package dev.waamir.hotelaluraapi.adapter.dto.resource;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ErrorMessage {
+public class MessageResponse {
     private String message;
 }

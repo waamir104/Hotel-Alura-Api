@@ -1,4 +1,4 @@
-package dev.waamir.hotelaluraapi.adapter.dto.AuthenticationResource;
+package dev.waamir.hotelaluraapi.adapter.dto.resource.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationResponse {
+public class UserResponse {
     private String token;
 }
