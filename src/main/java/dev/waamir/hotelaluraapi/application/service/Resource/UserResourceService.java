@@ -1,4 +1,4 @@
-package dev.waamir.hotelaluraapi.application.service.AuthenticationService;
+package dev.waamir.hotelaluraapi.application.service.Resource;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class AuthenticationService {
+public class UserResourceService {
 
     private final IUserRepository<User> userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -49,17 +49,17 @@ public class AuthenticationService {
     public AuthenticationResponse authenticate(UserRequest userRequest) {
         System.out.println("before");
         Authentication authentication = null;
-        try {
+        // try {
             authentication = authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                     userRequest.getUsername(),
                     userRequest.getPassword()
                 )
             );
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        System.out.println(authentication.getCredentials().toString());
+        // } catch (Exception e) {
+        //     System.out.println(e.getClass().toString());
+        // }
+        // System.out.println(authentication.0ogetCredentials().toString());
         User user = userRepository.getByUsername(userRequest.getUsername())
             .orElseThrow(() -> new ApiException("An error occurred processing the authentication of the user."));
         String jwt = jwtService.generateJwt(user);
