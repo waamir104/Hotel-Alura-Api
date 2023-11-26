@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import dev.waamir.hotelaluraapi.adapter.dto.AuthenticationResource.AuthenticationResponse;
-import dev.waamir.hotelaluraapi.adapter.dto.User.UserRequest;
+import dev.waamir.hotelaluraapi.adapter.dto.resource.MessageResponse;
+import dev.waamir.hotelaluraapi.adapter.dto.resource.User.UserRequest;
+import dev.waamir.hotelaluraapi.adapter.dto.resource.User.UserResponse;
 import dev.waamir.hotelaluraapi.application.service.Resource.UserResourceService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -19,20 +21,29 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserResource {
 
-    private final UserResourceService authService;
+    private final UserResourceService userResourceService;
     
     @PostMapping("/register")
     @Transactional
-    public ResponseEntity<AuthenticationResponse> register(
+    public ResponseEntity<UserResponse> register(
         @RequestBody UserRequest userRequest
     ) {
-        return ResponseEntity.ok(authService.register(userRequest));
+        return ResponseEntity.ok(userResourceService.register(userRequest));
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticate(
+    public ResponseEntity<UserResponse> authenticate(
         @RequestBody UserRequest userRequest
     ) {
-        return ResponseEntity.ok(authService.authenticate(userRequest));
+        return ResponseEntity.ok(userResourceService.authenticate(userRequest));
+    }
+
+    @PutMapping("/verify/{type}/{encodedUserId}")
+    public ResponseEntity<MessageResponse> verify(
+        @PathVariable String type,
+        @PathVariable String encodedUserId
+    ) {
+        String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("api/v1/user/verify/" + type + "/" + encodedUserId).toUriString();
+        return ResponseEntity.ok(userResourceService.verify(type, encodedUserId, url));
     }
 }
