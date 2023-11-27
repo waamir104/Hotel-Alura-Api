@@ -1,5 +1,6 @@
 package dev.waamir.hotelaluraapi.infrastructure.rest.spring.resources;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,7 +29,9 @@ public class UserResource {
     public ResponseEntity<UserResponse> register(
         @RequestBody UserRequest userRequest
     ) {
-        return ResponseEntity.ok(userResourceService.register(userRequest));
+        return ResponseEntity
+            .status(HttpStatus.CREATED)
+            .body(userResourceService.register(userRequest));
     }
 
     @PostMapping("/authenticate")
