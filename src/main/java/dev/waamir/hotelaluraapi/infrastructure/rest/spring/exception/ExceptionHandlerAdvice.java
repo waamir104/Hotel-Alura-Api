@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -52,6 +53,17 @@ public class ExceptionHandlerAdvice {
             .body(
                 MessageResponse.builder()
                     .message("Invalid login credentials. Please verify the data and try again.")
+                    .build()
+            );
+    }
+
+    @ExceptionHandler(UsernameNotFoundException.class) 
+    public ResponseEntity<MessageResponse> handleUsernameNotFound() {
+        return ResponseEntity
+            .status(HttpStatus.NOT_FOUND)
+            .body(
+                MessageResponse.builder()
+                    .message("User not found")
                     .build()
             );
     }

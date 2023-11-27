@@ -14,6 +14,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -81,7 +82,7 @@ public class UserRepositoryImpl implements IUserRepository<User>{
             wantedUser.setRole(wantedRole);
             return Optional.of(wantedUser);
         } catch (Exception e) {
-            throw new ApiException("User not found. Please try again. \n\n" + e.getMessage());
+            throw new UsernameNotFoundException("");
         }
     }
     
@@ -93,7 +94,7 @@ public class UserRepositoryImpl implements IUserRepository<User>{
             wantedUser.setRole(wantedRole);
             return Optional.of(wantedUser);
         } catch (Exception e) {
-            throw new ApiException("User not found. Please try again. \n\n" + e.getMessage());
+            throw new UsernameNotFoundException("");
         }
     }
 
