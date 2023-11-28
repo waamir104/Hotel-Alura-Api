@@ -145,7 +145,8 @@ public class UserRepositoryImpl implements IUserRepository<User>{
         }
     }
     
-    private Integer getUsernameCount(String username) {
+    @Override
+    public Integer getUsernameCount(String username) {
         return jdbc.queryForObject(COUNT_USER_USERNAME_QUERY, Map.of("username", username), Integer.class);
     }
 
