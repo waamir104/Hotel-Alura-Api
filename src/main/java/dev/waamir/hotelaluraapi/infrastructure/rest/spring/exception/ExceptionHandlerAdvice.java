@@ -3,9 +3,6 @@ package dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -35,7 +32,7 @@ public class ExceptionHandlerAdvice {
         return ResponseEntity.badRequest().body(errors);
     }
 
-    @ExceptionHandler(DisabledException.class)
+    @ExceptionHandler(UserDisabledException.class)
     public ResponseEntity<MessageResponse> handleUserDiasbled() {
         return ResponseEntity
             .status(HttpStatusCode.valueOf(403))
@@ -46,19 +43,19 @@ public class ExceptionHandlerAdvice {
             );
     }
 
-    @ExceptionHandler(BadCredentialsException.class)
+    @ExceptionHandler(WrongCredentialsException.class)
     public ResponseEntity<MessageResponse> handleBadCreditials() {
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
             .body(
                 MessageResponse.builder()
-                    .message("Invalid login credentials. Please verify the data and try again.")
+                    .message("Invalid authentication credentials. Please verify the data and try again.")
                     .build()
             );
     }
 
-    @ExceptionHandler(UsernameNotFoundException.class) 
-    public ResponseEntity<MessageResponse> handleUsernameNotFound() {
+    @ExceptionHandler(UserNotFoundException.class) 
+    public ResponseEntity<MessageResponse> handleUserNotFound() {
         return ResponseEntity
             .status(HttpStatus.NOT_FOUND)
             .body(
