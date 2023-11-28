@@ -28,6 +28,7 @@ import dev.waamir.hotelaluraapi.domain.port.IRoleRepository;
 import dev.waamir.hotelaluraapi.domain.port.IUserRepository;
 import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.ApiException;
 import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.DuplicateRecordException;
+import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.UserAlreadyEnabledException;
 import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 
@@ -49,7 +50,7 @@ public class UserRepositoryImpl implements IUserRepository<User>{
 
     @Override
     public User create(User user) {
-        if (getUsernameCount(user.getUsername()) > 0) throw new DuplicateRecordException("");
+        if (getUsernameCount(user.getUsername()) > 0) throw new DuplicateRecordException("User already exists.");
         try {
             KeyHolder holder = new GeneratedKeyHolder();
             SqlParameterSource parameters = new MapSqlParameterSource()
@@ -133,16 +134,13 @@ public class UserRepositoryImpl implements IUserRepository<User>{
     @Override
     public void enable(String type, String userIdEncoded, String url) {
         if (!(accountVerificationRepository.getUrlCount(url) == Integer.valueOf(1))) throw new ApiException("An error ocurred validating the url. Please try again.");
-        try {
-            byte[] userIdEncodedArray = decoder.decode(userIdEncoded);
-            String userIdString = new String(userIdEncodedArray, StandardCharsets.UTF_8);
-            User user = Objects.requireNonNull(getById(Long.parseLong(userIdString)).get());
-            if (type.equals(ACCOUNT.getType())) {
-                user.setEnabled(true);
-                update(user);
-            }
-        } catch (Exception e) {
-            throw new ApiException("An error ocurred enabling user. Please try again. \n\n" + e.getMessage());
+        byte[] userIdEncodedArray = decoder.decode(userIdEncoded);
+        String userIdString = new String(userIdEncodedArray, StandardCharsets.UTF_8);
+        User user = Objects.requireNonNull(getById(Long.parseLong(userIdString)).get());
+        if (type.equals(ACCOUNT.getType())) {
+            if (user.isEnabled() == true) throw new UserAlreadyEnabledException("");
+            user.setEnabled(true);
+            update(user);
         }
     }
     

@@ -64,4 +64,26 @@ public class ExceptionHandlerAdvice {
                     .build()
             );
     }
+
+    @ExceptionHandler(DuplicateRecordException.class)
+    public ResponseEntity<MessageResponse> handleDuplicateRecord(DuplicateRecordException e) {
+        return ResponseEntity
+            .status(HttpStatus.CONFLICT)
+            .body(
+                MessageResponse.builder()
+                    .message(e.getMessage())
+                    .build()
+            );
+    }
+
+    @ExceptionHandler(UserAlreadyEnabledException.class)
+    public ResponseEntity<MessageResponse> handleUserAlreadyEnabled() {
+        return ResponseEntity
+            .status(HttpStatus.ALREADY_REPORTED)
+            .body(
+                MessageResponse.builder()
+                    .message("Account has already been enabled")   
+                    .build()
+            );
+    }
 }
