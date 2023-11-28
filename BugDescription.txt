@@ -1,3 +1,0 @@
-Main Problem : The api is not authenticating the user http request 
-
-    Description: The password encoder is not encoding and verifying the password provided in the request.
