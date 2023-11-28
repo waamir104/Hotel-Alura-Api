@@ -14,7 +14,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -28,6 +27,8 @@ import dev.waamir.hotelaluraapi.domain.port.IEmailService;
 import dev.waamir.hotelaluraapi.domain.port.IRoleRepository;
 import dev.waamir.hotelaluraapi.domain.port.IUserRepository;
 import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.ApiException;
+import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.DuplicateRecordException;
+import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 import static dev.waamir.hotelaluraapi.application.enumeration.VerificationType.*;
@@ -48,7 +49,7 @@ public class UserRepositoryImpl implements IUserRepository<User>{
 
     @Override
     public User create(User user) {
-        if (getUsernameCount(user.getUsername()) > 0) throw new ApiException("Username is already registered:");
+        if (getUsernameCount(user.getUsername()) > 0) throw new DuplicateRecordException("");
         try {
             KeyHolder holder = new GeneratedKeyHolder();
             SqlParameterSource parameters = new MapSqlParameterSource()
@@ -82,7 +83,7 @@ public class UserRepositoryImpl implements IUserRepository<User>{
             wantedUser.setRole(wantedRole);
             return Optional.of(wantedUser);
         } catch (Exception e) {
-            throw new UsernameNotFoundException("");
+            throw new UserNotFoundException("");
         }
     }
     
@@ -94,7 +95,7 @@ public class UserRepositoryImpl implements IUserRepository<User>{
             wantedUser.setRole(wantedRole);
             return Optional.of(wantedUser);
         } catch (Exception e) {
-            throw new UsernameNotFoundException("");
+            throw new UserNotFoundException("");
         }
     }
 
