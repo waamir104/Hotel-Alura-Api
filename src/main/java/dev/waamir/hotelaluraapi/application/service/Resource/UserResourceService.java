@@ -2,7 +2,6 @@ package dev.waamir.hotelaluraapi.application.service.Resource;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import static dev.waamir.hotelaluraapi.application.enumeration.RoleType.*;
@@ -25,7 +24,6 @@ import lombok.RequiredArgsConstructor;
 public class UserResourceService {
 
     private final IUserRepository<User> userRepository;
-    private final PasswordEncoder passwordEncoder;
     private final IRoleRepository<Role> roleRepository;
     private final JwtService jwtService;
     private final AuthenticationManager authManager;
@@ -35,7 +33,7 @@ public class UserResourceService {
             .orElseThrow(() -> new ApiException("An error ocurred processing the creation of the user."));
         User user = User.builder()
             .username(userRequest.getUsername())
-            .password(passwordEncoder.encode(userRequest.getPassword()))
+            .password(userRequest.getPassword())
             .createdAt(LocalDateTime.now())
             .role(role)
             .build();
