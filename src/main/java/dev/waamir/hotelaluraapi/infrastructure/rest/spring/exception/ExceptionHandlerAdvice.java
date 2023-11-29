@@ -97,4 +97,15 @@ public class ExceptionHandlerAdvice {
                     .build()
             );
     }
+
+    @ExceptionHandler(RoomTypeNotFoundException.class)
+    public ResponseEntity<MessageResponse> handleRoomTypeNotFound() {
+        return ResponseEntity
+            .status(HttpStatus.NOT_FOUND)
+            .body(
+                MessageResponse.builder()
+                    .message("Room type not found.")
+                    .build()
+            );
+    }
 }
