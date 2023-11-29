@@ -2,6 +2,7 @@ package dev.waamir.hotelaluraapi.infrastructure.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -21,7 +22,9 @@ public class SecurityFilterChainConfig {
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
         
-    private static final String[] WHITE_LIST_URLS = {"/api/v1/user/**"};
+    private static final String[] WHITE_LIST_URLS = {
+        "/api/v1/user/**", "/api/v1/room/list", "/api/v1/room/number/{number}"
+    };
 
     @Bean
     public SecurityFilterChain securityFilterCHain(HttpSecurity http) throws Exception {
@@ -30,6 +33,8 @@ public class SecurityFilterChainConfig {
         http.authorizeHttpRequests(
             req -> req.requestMatchers(WHITE_LIST_URLS)
                 .permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/v1/room/register").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "api/v1/room/update").hasAuthority("ADMIN")
                 .anyRequest()
                 .authenticated()
         );
