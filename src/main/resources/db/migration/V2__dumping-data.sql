@@ -8,10 +8,10 @@
 -- Dumping data for table `roles`
 --
 
-INSERT INTO `roles` (`role_id`, `name`) VALUES 
-    (1,'GUEST'),
-    (2,'ADMIN'),
-    (3,'WORKER');
+INSERT INTO `roles` (`name`) VALUES 
+    ('GUEST'),
+    ('ADMIN'),
+    ('WORKER');
 
 ALTER TABLE `roles`
     MODIFY `role_id` BIGINT NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 4;
@@ -20,27 +20,45 @@ ALTER TABLE `roles`
 -- Dumping data for table `payment_types`
 --
 
-INSERT INTO `payment_types` (`payment_type_id`, `name`) VALUES
-    (1, 'Cash'),
-    (2, 'Debit Card'),
-    (3, 'Credit Card'),
-    (4, 'Bank Transaction');
-
-ALTER TABLE `payment_types` 
-    MODIFY `payment_type_id` BIGINT NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 5;
+INSERT INTO `payment_types` (`name`) VALUES
+    ('Cash'),
+    ('Debit Card'),
+    ('Credit Card'),
+    ('Bank Transaction');
 
 --
 -- Dumping data for table `room_types`
 --
 
-INSERT INTO `room_types` (`room_type_id`, `name`, `daily_price`, `description`) VALUES
-    (1, 'Double', 40000, 'A room with a double bed, for two people.'),
-    (2, 'Single', 30000, 'A room for one person with a single bed.'),
-    (3, 'Twin', 60000, 'A room with two separate beds, suitable for two individuals.'),
-    (4, 'Connecting', 50000, 'Two single rooms with a connecting door, convinient for families or groups.'),
-    (5, 'Family', 80000, 'A room designed to accommodate a family, with a double bed, a single bed and a sofa bed.'),
-    (6, 'Suite', 100000, 'A larger and more luxurious room with separate living and sleeping areas.'),
-    (7, 'Penthouse', 50000, 'A luxurious suite located on the highest floor of the hotel.');
+INSERT INTO `room_types` (`name`, `daily_price`, `description`) VALUES
+    ('Double', 40000, 'A room with a double bed, for two people.'),
+    ('Single', 30000, 'A room for one person with a single bed.'),
+    ('Twin', 60000, 'A room with two separate beds, suitable for two individuals.'),
+    ('Connecting', 50000, 'Two single rooms with a connecting door, convinient for families or groups.'),
+    ('Family', 80000, 'A room designed to accommodate a family, with a double bed, a single bed and a sofa bed.'),
+    ('Suite', 100000, 'A larger and more luxurious room with separate living and sleeping areas.'),
+    ('Penthouse', 50000, 'A luxurious suite located on the highest floor of the hotel.');
 
-ALTER TABLE `room_types`
-    MODIFY `room_type_id` BIGINT NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 8;
+
+
+--
+-- Dumping data for table `rooms`
+--
+
+INSERT INTO `rooms` (`number`, `room_type_id`, `description`)
+VALUES
+    (101, 1, 'Double room with a view of the city.'),
+    (102, 2, 'Single room with a cozy ambiance.'),
+    (103, 3, 'Twin room with comfortable beds.'),
+    (104, 4, 'Connecting rooms for families.'),
+    (105, 5, 'Family room with ample space for everyone.'),
+    (201, 4, 'Connecting rooms with a shared lounge area.'),
+    (202, 1, 'Double room with a fireplace.'),
+    (203, 1, 'Double room with a balcony.'),
+    (204, 2, 'Single room with a workspace.'),
+    (205, 3, 'Twin room with a modern design.'),
+    (301, 6, 'Luxurious suite with separate living and sleeping areas.'),
+    (302, 5, 'Family room with a play area for kids.'),
+    (303, 6, 'Suite with a private jacuzzi.'),
+    (304, 7, 'Penthouse with a private terrace.'),
+    (305, 7, 'Penthouse with panoramic views.');
