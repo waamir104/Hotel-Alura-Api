@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import dev.waamir.hotelaluraapi.domain.model.Room;
 import dev.waamir.hotelaluraapi.domain.port.IRoomRepository;
+import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.DuplicateRecordException;
 import lombok.RequiredArgsConstructor;
 
 @Repository
@@ -18,7 +19,13 @@ public class RoomRepositoryImpl implements IRoomRepository<Room> {
 
     @Override
     public Room create(Room room) {
-        return roomJpaRepository.save(room);
+        Room roomCreated;
+        try {
+            roomCreated = roomJpaRepository.save(room);
+        } catch (Exception e) {
+            throw new DuplicateRecordException("Room is already registered");
+        }
+        return roomCreated;
     }
 
     @Override
