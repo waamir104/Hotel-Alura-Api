@@ -19,7 +19,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -39,12 +39,12 @@ public class Room {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "room_id")
 	private Long id;
-	@NotEmpty(message = "Room number cannot be empty")
+	@NotNull(message = "Room number cannot be empty")
 	private Long number;
 	@Column(nullable = true)
 	private String description;
 	
-	@NotEmpty
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "room_type_id", nullable = false, foreignKey = @ForeignKey(name = "FK_rooms_room_types"))
 	@OnDelete(action = OnDeleteAction.NO_ACTION)
