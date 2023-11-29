@@ -1,0 +1,3 @@
+°  Implement the Guest Resource methods
+
+°  Add the authenticated paths to the security filter chain configuration
