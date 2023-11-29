@@ -2,8 +2,10 @@ package dev.waamir.hotelaluraapi.domain.port;
 
 import dev.waamir.hotelaluraapi.domain.model.Room;
 
-import java.util.List;
 import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface IRoomRepository<T extends Room> {
     T create(T room);
@@ -11,5 +13,5 @@ public interface IRoomRepository<T extends Room> {
     Optional<T> getByNumber(Long number);
     void delete(T room);
     void update(T room);
-    List<T> list();
+    Page<T> list(Pageable pagination);
 }

@@ -1,7 +1,9 @@
 package dev.waamir.hotelaluraapi.application.service.Room;
 
-import java.util.List;
 import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import dev.waamir.hotelaluraapi.domain.model.Room;
 import dev.waamir.hotelaluraapi.domain.port.IRoomRepository;
@@ -38,8 +40,8 @@ public class RoomServiceImpl implements IRoomService<Room> {
     }
 
     @Override
-    public List<Room> list() {
-        return roomRepository.list();
+    public Page<Room> list(Pageable pagination) {
+        return roomRepository.list(pagination);
     }
     
 }

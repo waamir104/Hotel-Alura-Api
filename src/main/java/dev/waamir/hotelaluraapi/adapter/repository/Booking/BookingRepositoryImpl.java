@@ -1,7 +1,9 @@
 package dev.waamir.hotelaluraapi.adapter.repository.Booking;
 
-import java.util.List;
 import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import dev.waamir.hotelaluraapi.domain.model.Booking;
 import dev.waamir.hotelaluraapi.domain.port.IBookingRepository;
@@ -33,8 +35,8 @@ public class BookingRepositoryImpl implements IBookingRepository<Booking> {
     }
 
     @Override
-    public List<Booking> list() {
-        return bookingJpaRepository.findAll();
+    public Page<Booking> list(Pageable pagination) {
+        return bookingJpaRepository.findAll(pagination);
     }
 
 }

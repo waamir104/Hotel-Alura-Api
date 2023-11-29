@@ -2,8 +2,10 @@ package dev.waamir.hotelaluraapi.domain.port;
 
 import dev.waamir.hotelaluraapi.domain.model.Guest;
 
-import java.util.List;
 import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface IGuestRepository<T extends Guest> {
     T create(T guest);
@@ -11,5 +13,5 @@ public interface IGuestRepository<T extends Guest> {
     Optional<T> getByEmail(String email);
     void delete(T guest);
     void update(T guest);
-    List<T> list();
+    Page<T> list(Pageable pagination);
 }

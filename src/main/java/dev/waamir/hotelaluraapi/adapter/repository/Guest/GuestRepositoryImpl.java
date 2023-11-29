@@ -1,7 +1,9 @@
 package dev.waamir.hotelaluraapi.adapter.repository.Guest;
 
-import java.util.List;
 import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import dev.waamir.hotelaluraapi.domain.model.Guest;
 import dev.waamir.hotelaluraapi.domain.port.IGuestRepository;
@@ -38,8 +40,8 @@ public class GuestRepositoryImpl implements IGuestRepository<Guest> {
     }
 
     @Override
-    public List<Guest> list() {
-        return guestJpaRepository.findAll();
+    public Page<Guest> list(Pageable pagination) {
+        return guestJpaRepository.findAll(pagination);
     }
 
 }
