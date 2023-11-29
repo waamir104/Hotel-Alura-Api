@@ -14,4 +14,7 @@ public interface IRoomTypeJpaRepository extends JpaRepository<RoomType, Long>{
 
     @Query("SELECT rt FROM RoomType rt WHERE rt.name = :name")
     Optional<RoomType> findByName(String name);
+
+    @Query("SELCET COUNT(rt) FROM RoomType rt WHERE rt.name = :name")
+    Long countByName(String name);
 }

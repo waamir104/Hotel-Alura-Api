@@ -45,4 +45,9 @@ public class RoomTypeRepositoryImpl implements IRoomTypeRepository<RoomType> {
         return roomTypeJpaRepository.findByName(name);
     }
 
+    @Override
+    public Long countByName(String name) {
+        return roomTypeJpaRepository.countByName(name);
+    }
+
 }

@@ -41,5 +41,10 @@ public class RoomTypeServiceImpl implements IRoomTypeService<RoomType> {
     public Optional<RoomType> getByName(String name) {
         return roomTypeRepository.getByName(name);
     }
+
+    @Override
+    public Long countByName(String name) {
+        return roomTypeRepository.countByName(name);
+    }
     
 }
