@@ -4,11 +4,13 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
 
 import dev.waamir.hotelaluraapi.domain.model.Booking;
 import dev.waamir.hotelaluraapi.domain.port.IBookingRepository;
 import lombok.RequiredArgsConstructor;
 
+@Repository
 @RequiredArgsConstructor
 public class BookingRepositoryImpl implements IBookingRepository<Booking> {
 

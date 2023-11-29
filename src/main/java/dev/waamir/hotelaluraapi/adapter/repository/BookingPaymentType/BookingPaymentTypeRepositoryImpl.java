@@ -3,11 +3,14 @@ package dev.waamir.hotelaluraapi.adapter.repository.BookingPaymentType;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Repository;
+
 import dev.waamir.hotelaluraapi.domain.model.Booking;
 import dev.waamir.hotelaluraapi.domain.model.BookingPaymentType;
 import dev.waamir.hotelaluraapi.domain.port.IBookingPaymentTypeRepository;
 import lombok.RequiredArgsConstructor;
 
+@Repository
 @RequiredArgsConstructor
 public class BookingPaymentTypeRepositoryImpl implements IBookingPaymentTypeRepository<BookingPaymentType> {
     

@@ -3,10 +3,13 @@ package dev.waamir.hotelaluraapi.adapter.repository.RoomType;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Repository;
+
 import dev.waamir.hotelaluraapi.domain.model.RoomType;
 import dev.waamir.hotelaluraapi.domain.port.IRoomTypeRepository;
 import lombok.RequiredArgsConstructor;
 
+@Repository
 @RequiredArgsConstructor
 public class RoomTypeRepositoryImpl implements IRoomTypeRepository<RoomType> {
 
