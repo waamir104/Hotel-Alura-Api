@@ -64,7 +64,8 @@ CREATE TABLE `payment_types` (
 
 CREATE TABLE `guests` (
   `birth_date` date DEFAULT NULL,
-  `guest_id` BIGINT NOT NULL,
+  `guest_id` BIGINT NOT NULL AUTO_INCREMENT,
+  `id_number` BIGINT NULL,
   `phone_number` BIGINT DEFAULT NULL,
   `email` VARCHAR(255) NOT NULL,
   `last_name` VARCHAR(255) DEFAULT NULL,

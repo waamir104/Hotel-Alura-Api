@@ -9,6 +9,8 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -31,8 +33,11 @@ import lombok.Data;
 public class Guest {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "guest_id")
 	private Long id;
+	@Column(name = "id_number")
+	private Long idNumber;
 	@Column(nullable = true)
 	private String name;
 	@Column(nullable = true)
