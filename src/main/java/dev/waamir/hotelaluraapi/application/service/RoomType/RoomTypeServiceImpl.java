@@ -36,5 +36,10 @@ public class RoomTypeServiceImpl implements IRoomTypeService<RoomType> {
     public List<RoomType> list() {
         return roomTypeRepository.list();
     }
+
+    @Override
+    public Optional<RoomType> getByName(String name) {
+        return roomTypeRepository.getByName(name);
+    }
     
 }

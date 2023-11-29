@@ -40,4 +40,9 @@ public class RoomTypeRepositoryImpl implements IRoomTypeRepository<RoomType> {
         return roomTypeJpaRepository.findAll();
     }
 
+    @Override
+    public Optional<RoomType> getByName(String name) {
+        return roomTypeJpaRepository.findByName(name);
+    }
+
 }

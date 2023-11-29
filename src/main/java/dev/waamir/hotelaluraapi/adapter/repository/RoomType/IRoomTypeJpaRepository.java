@@ -11,4 +11,7 @@ public interface IRoomTypeJpaRepository extends JpaRepository<RoomType, Long>{
     
     @Query("SELECT rt FROM RoomType rt WHERE rt.id = :id")
     Optional<RoomType> findById(Long id);
+
+    @Query("SELECT rt FROM RoomType rt WHERE rt.name = :name")
+    Optional<RoomType> findByName(String name);
 }
