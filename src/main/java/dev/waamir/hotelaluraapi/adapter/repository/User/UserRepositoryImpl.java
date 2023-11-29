@@ -20,10 +20,12 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import dev.waamir.hotelaluraapi.application.model.EmailDetails;
 import dev.waamir.hotelaluraapi.domain.model.AccountVerification;
+import dev.waamir.hotelaluraapi.domain.model.Guest;
 import dev.waamir.hotelaluraapi.domain.model.Role;
 import dev.waamir.hotelaluraapi.domain.model.User;
 import dev.waamir.hotelaluraapi.domain.port.IAccountVerificationRepository;
 import dev.waamir.hotelaluraapi.domain.port.IEmailService;
+import dev.waamir.hotelaluraapi.domain.port.IGuestRepository;
 import dev.waamir.hotelaluraapi.domain.port.IRoleRepository;
 import dev.waamir.hotelaluraapi.domain.port.IUserRepository;
 import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.ApiException;
@@ -47,6 +49,7 @@ public class UserRepositoryImpl implements IUserRepository<User>{
     private final Decoder decoder;
     private final IAccountVerificationRepository<AccountVerification> accountVerificationRepository;
     private final IEmailService emailService;
+    private final IGuestRepository<Guest> guestRepository;
 
     @Override
     public User create(User user) {
@@ -66,7 +69,12 @@ public class UserRepositoryImpl implements IUserRepository<User>{
             newAccountVerification.setUrl(verificationUrl);
             newAccountVerification.setUser(user);
             accountVerificationRepository.create(newAccountVerification);
-            
+            if (user.getRole().getName().equals("GUEST")) {
+                Guest guest = Guest.builder()
+                    .email(user.getUsername())
+                    .build();
+                guestRepository.create(guest);
+            }
             EmailDetails emailDetails = new EmailDetails(user.getUsername(), emailService.getConfirmationMessage(verificationUrl  ), "Confirm Account");
             emailService.sendEmail(emailDetails);
 
