@@ -17,8 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 import dev.waamir.hotelaluraapi.adapter.dto.resource.Room.CreateRoomRequest;
 import dev.waamir.hotelaluraapi.adapter.dto.resource.Room.RoomDto;
 import dev.waamir.hotelaluraapi.domain.model.Room;
+import dev.waamir.hotelaluraapi.domain.model.RoomType;
 import dev.waamir.hotelaluraapi.domain.port.IRoomRepository;
+import dev.waamir.hotelaluraapi.domain.port.IRoomTypeRepository;
 import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.RoomNotFoundException;
+import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.RoomTypeNotFoundException;
 import jakarta.validation.Valid;
 
 @RestController
@@ -27,6 +30,8 @@ public class RoomResource {
 
     @Autowired
     private IRoomRepository<Room> roomRepository;
+    @Autowired
+    private IRoomTypeRepository<RoomType> roomTypeRepository;
     
     @GetMapping("/list")
     public ResponseEntity<Page<RoomDto>> list (
@@ -51,9 +56,19 @@ public class RoomResource {
 
     @PostMapping("/register")
     public ResponseEntity<String> register (
-        @RequestBody @Valid CreateRoomRequest dto
+        @RequestBody @Valid CreateRoomRequest request
     ) {
-        // TODO implement the logic for the creation of the room
+        RoomType roomType = roomTypeRepository.getByName(request.roomTypeName()).orElseThrow(
+            () -> {
+                throw new RoomTypeNotFoundException("");
+            }
+        );
+        Room room = Room.builder()
+            .number(request.number())
+            .description(request.description())
+            .roomType(roomType)
+            .build();
+        roomRepository.create(room);
         return ResponseEntity
             .status(HttpStatus.CREATED)
             .body("");
