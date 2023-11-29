@@ -46,4 +46,9 @@ public class GuestRepositoryImpl implements IGuestRepository<Guest> {
         return guestJpaRepository.findAll(pagination);
     }
 
+    @Override
+    public Optional<Guest> getByIdNumber(Long idNumber) {
+        return guestJpaRepository.findByIdNumber(idNumber);
+    }
+
 }

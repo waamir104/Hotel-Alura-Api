@@ -11,4 +11,6 @@ public interface IGuestJpaRepository extends JpaRepository<Guest, Long> {
     Optional<Guest> findByEmail(String email);
     @Query("SELECT g FROM Guest g WHERE g.id = :id")
     Optional<Guest> findById(Long id);
+    @Query ("SELECT g FROM Guest g WHERE g.idNumber = :idNumber")
+    Optional<Guest> findByIdNumber(Long idNumber);
 }

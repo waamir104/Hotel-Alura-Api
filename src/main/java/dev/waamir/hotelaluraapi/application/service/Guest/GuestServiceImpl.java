@@ -43,5 +43,10 @@ public class GuestServiceImpl implements IGuestService<Guest> {
     public Page<Guest> list(Pageable pagination) {
         return guestRepository.list(pagination);
     }
+
+    @Override
+    public Optional<Guest> getByIdNumber(Long idNumber) {
+        return guestRepository.getByIdNumber(idNumber);
+    }
     
 }

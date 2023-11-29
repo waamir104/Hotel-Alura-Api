@@ -13,6 +13,7 @@ public interface IGuestService<T extends Guest> {
     T create(T guest);
     Optional<T> getById(Long id);
     Optional<T> getByEmail(String email);
+    Optional<T> getByIdNumber(Long idNumber);
     void delete(T guest);
     void update(T guest);
     Page<T> list(Pageable pagination);
