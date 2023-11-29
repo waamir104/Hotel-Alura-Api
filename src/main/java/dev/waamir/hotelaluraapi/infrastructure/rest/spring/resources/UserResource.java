@@ -42,6 +42,7 @@ public class UserResource {
     }
 
     @PutMapping("/verify/{type}/{encodedUserId}")
+    @Transactional
     public ResponseEntity<MessageResponse> verify(
         @PathVariable String type,
         @PathVariable String encodedUserId
