@@ -14,4 +14,7 @@ public interface IPaymentTypeJpaRepository extends JpaRepository<PaymentType, Lo
 
     @Query("SELECT pt FROM PaymentType pt WHERE pt.name = :name")
     Optional<PaymentType> findByName(String name);
+
+    @Query("SELECT COUNT(pt) FROM PaymentType pt WHERE pt.name = :name")
+    long countByName(String name);
 }

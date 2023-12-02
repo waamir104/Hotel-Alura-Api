@@ -41,5 +41,10 @@ public class PaymentTypeServiceImpl implements IPaymentTypeService<PaymentType> 
     public Optional<PaymentType> getByName(String name) {
         return paymentTypeRepository.getByName(name);
     }
+
+    @Override
+    public long countByName(String name) {
+        return paymentTypeRepository.countByName(name);
+    }
     
 }
