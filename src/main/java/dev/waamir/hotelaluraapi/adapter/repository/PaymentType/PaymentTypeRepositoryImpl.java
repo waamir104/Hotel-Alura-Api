@@ -39,5 +39,10 @@ public class PaymentTypeRepositoryImpl implements IPaymentTypeRepository<Payment
     public List<PaymentType> list() {
         return paymentTypeJpaRepository.findAll();
     }
+
+    @Override
+    public Optional<PaymentType> getByName(String name) {
+        return paymentTypeJpaRepository.findByName(name);
+    }
         
 }

@@ -36,5 +36,10 @@ public class PaymentTypeServiceImpl implements IPaymentTypeService<PaymentType> 
     public List<PaymentType> list() {
         return paymentTypeRepository.list();
     }
+
+    @Override
+    public Optional<PaymentType> getByName(String name) {
+        return paymentTypeRepository.getByName(name);
+    }
     
 }

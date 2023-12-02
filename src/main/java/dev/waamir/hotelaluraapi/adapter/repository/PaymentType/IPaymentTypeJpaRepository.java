@@ -11,4 +11,7 @@ public interface IPaymentTypeJpaRepository extends JpaRepository<PaymentType, Lo
     
     @Query("SELECT pt FROM PaymentType pt WHERE pt.id = :id")
     Optional<PaymentType> findById(Long id);
+
+    @Query("SELECT pt FROM PaymentType pt WHERE pt.name = :name")
+    Optional<PaymentType> findByName(String name);
 }
