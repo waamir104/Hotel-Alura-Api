@@ -108,4 +108,15 @@ public class ExceptionHandlerAdvice {
                     .build()
             );
     }
+
+    @ExceptionHandler(ApiNotFoundException.class)
+    public ResponseEntity<MessageResponse> handleNotFound(ApiNotFoundException e) {
+        return ResponseEntity
+            .status(HttpStatus.NOT_FOUND)
+            .body(
+                MessageResponse.builder()
+                    .message(e.getMessage())
+                    .build()
+            );
+    }
 }
