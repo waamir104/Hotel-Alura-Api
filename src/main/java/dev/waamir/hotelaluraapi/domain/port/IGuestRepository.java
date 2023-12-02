@@ -12,7 +12,7 @@ public interface IGuestRepository<T extends Guest> {
     Optional<T> getById(Long id);
     Optional<T> getByEmail(String email);
     Optional<T> getByIdNumber(Long idNumber);
-    Long countByEmail(String email);
+    long countByEmail(String email);
     void delete(T guest);
     void update(T guest);
     Page<T> list(Pageable pagination);

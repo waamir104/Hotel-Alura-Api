@@ -50,7 +50,7 @@ public class GuestServiceImpl implements IGuestService<Guest> {
     }
 
     @Override
-    public Long countByEmail(String email) {
+    public long countByEmail(String email) {
         return guestRepository.countByEmail(email);
     }
     
