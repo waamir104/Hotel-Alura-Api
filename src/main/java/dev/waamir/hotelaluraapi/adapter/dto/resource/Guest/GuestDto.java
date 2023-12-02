@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 import dev.waamir.hotelaluraapi.domain.model.Guest;
 
-public record GuestResponse(
+public record GuestDto(
 	Long idNumber,
 	String name,
 	String lastName,
@@ -13,7 +13,7 @@ public record GuestResponse(
 	String email
 ) {
 	
-	public GuestResponse(Guest guest) {
+	public GuestDto(Guest guest) {
 		this(
 			guest.getIdNumber(),
 			guest.getName(),
