@@ -25,6 +25,21 @@ public class SecurityFilterChainConfig {
     private static final String[] WHITE_LIST_URLS = {
         "/api/v1/user/**", "/api/v1/room/list", "/api/v1/room/number/{number}"
     };
+    private static final String[] GET_ADMIN_WORKER_PATHS = {
+        "api/v1/guest/list", "api/v1/guest/idNumber/{idNumber}", "api/v1/guest/email/{email}"
+    };
+    private static final String[] PUT_ADMIN_WORKER_PATHS = {
+        "api/v1/guest/update"
+    };
+    private static final String[] POST_ADMIN_WORKER_PATHS = {
+        "api/v1/guest/register"
+    };
+    private static final String[] POST_ADMIN_PATHS = {
+        "/api/v1/room/register"
+    };
+    private static final String[] PUT_ADMIN_PATHS = {
+        "api/v1/room/update"
+    };
 
     @Bean
     public SecurityFilterChain securityFilterCHain(HttpSecurity http) throws Exception {
@@ -33,8 +48,11 @@ public class SecurityFilterChainConfig {
         http.authorizeHttpRequests(
             req -> req.requestMatchers(WHITE_LIST_URLS)
                 .permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/v1/room/register").hasAuthority("ADMIN")
-                .requestMatchers(HttpMethod.PUT, "api/v1/room/update").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.POST, POST_ADMIN_PATHS).hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.PUT, PUT_ADMIN_PATHS).hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.POST, POST_ADMIN_WORKER_PATHS).hasAnyAuthority("ADMIN", "WORKER")
+                .requestMatchers(HttpMethod.PUT, PUT_ADMIN_WORKER_PATHS).hasAnyAuthority("ADMIN", "WORKER")
+                .requestMatchers(HttpMethod.GET, GET_ADMIN_WORKER_PATHS).hasAnyAuthority("ADMIN", "WORKER")
                 .anyRequest()
                 .authenticated()
         );
