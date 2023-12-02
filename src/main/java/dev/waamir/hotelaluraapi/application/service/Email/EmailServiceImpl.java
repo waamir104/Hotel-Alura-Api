@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 
 import dev.waamir.hotelaluraapi.application.model.EmailDetails;
+import dev.waamir.hotelaluraapi.domain.model.Guest;
 import dev.waamir.hotelaluraapi.domain.port.IEmailService;
 import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.ApiException;
 import jakarta.mail.internet.InternetAddress;
@@ -49,6 +50,20 @@ public class EmailServiceImpl implements IEmailService {
             byte[] bytes = FileCopyUtils.copyToByteArray(resource.getInputStream());
             String body = new String(bytes, StandardCharsets.UTF_8);
             body = body.replace("${confirmation-url}", url);
+            return body;
+        } catch (IOException e) {
+            throw new ApiException("An error ocurred getting the confirmation message");
+        }
+    }
+
+    @Override
+    public String getRegistrationMessage(Guest guest, String url) {
+        try {
+            Resource resource = new ClassPathResource("templates/Email/RegistrationEmailTemplate.html");
+            byte[] bytes = FileCopyUtils.copyToByteArray(resource.getInputStream());
+            String body = new String(bytes, StandardCharsets.UTF_8);
+            body = body.replace("${guest-name}", String.format("%s %s", guest.getName(), guest.getLastName()));
+            body = body.replace("${registration-url}", url);
             return body;
         } catch (IOException e) {
             throw new ApiException("An error ocurred getting the confirmation message");
