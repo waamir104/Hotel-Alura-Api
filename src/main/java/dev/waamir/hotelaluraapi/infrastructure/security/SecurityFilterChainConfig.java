@@ -35,10 +35,16 @@ public class SecurityFilterChainConfig {
         "api/v1/guest/register"
     };
     private static final String[] POST_ADMIN_PATHS = {
-        "/api/v1/room/register"
+        "/api/v1/room/register", "/api/v1/paymentType/register"
     };
     private static final String[] PUT_ADMIN_PATHS = {
         "api/v1/room/update"
+    };
+    private static final String[] DELETE_ADMIN_PATHS = {
+        "/api/v1/paymentType/delete/{id}"
+    };
+    private static final String[] GET_ADMIN_WORKER_GUEST_PATHS = {
+         "/api/v1/paymentType/list",  "/api/v1/paymentType/name/{name}", "/api/v1/paymentType/id/{id}"
     };
 
     @Bean
@@ -50,9 +56,11 @@ public class SecurityFilterChainConfig {
                 .permitAll()
                 .requestMatchers(HttpMethod.POST, POST_ADMIN_PATHS).hasAuthority("ADMIN")
                 .requestMatchers(HttpMethod.PUT, PUT_ADMIN_PATHS).hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, DELETE_ADMIN_PATHS).hasAuthority("ADMIN")
                 .requestMatchers(HttpMethod.POST, POST_ADMIN_WORKER_PATHS).hasAnyAuthority("ADMIN", "WORKER")
                 .requestMatchers(HttpMethod.PUT, PUT_ADMIN_WORKER_PATHS).hasAnyAuthority("ADMIN", "WORKER")
                 .requestMatchers(HttpMethod.GET, GET_ADMIN_WORKER_PATHS).hasAnyAuthority("ADMIN", "WORKER")
+                .requestMatchers(HttpMethod.GET, GET_ADMIN_WORKER_GUEST_PATHS).hasAnyAuthority("ADMIN", "WORKER", "GUEST")
                 .anyRequest()
                 .authenticated()
         );
