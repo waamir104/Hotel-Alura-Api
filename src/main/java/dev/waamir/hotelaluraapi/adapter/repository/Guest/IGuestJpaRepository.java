@@ -13,4 +13,6 @@ public interface IGuestJpaRepository extends JpaRepository<Guest, Long> {
     Optional<Guest> findById(Long id);
     @Query ("SELECT g FROM Guest g WHERE g.idNumber = :idNumber")
     Optional<Guest> findByIdNumber(Long idNumber);
+    @Query("SELECT COUNT(g) FROM Guest g WHERE g.email = :email")
+    Long countByEmail(String email);
 }

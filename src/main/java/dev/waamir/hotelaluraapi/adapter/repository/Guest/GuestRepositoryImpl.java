@@ -51,4 +51,8 @@ public class GuestRepositoryImpl implements IGuestRepository<Guest> {
         return guestJpaRepository.findByIdNumber(idNumber);
     }
 
+    @Override
+    public Long countByEmail(String email) {
+        return guestJpaRepository.countByEmail(email);
+    }
 }

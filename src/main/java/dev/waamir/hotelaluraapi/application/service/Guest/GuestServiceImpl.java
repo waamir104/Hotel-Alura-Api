@@ -48,5 +48,10 @@ public class GuestServiceImpl implements IGuestService<Guest> {
     public Optional<Guest> getByIdNumber(Long idNumber) {
         return guestRepository.getByIdNumber(idNumber);
     }
+
+    @Override
+    public Long countByEmail(String email) {
+        return guestRepository.countByEmail(email);
+    }
     
 }
