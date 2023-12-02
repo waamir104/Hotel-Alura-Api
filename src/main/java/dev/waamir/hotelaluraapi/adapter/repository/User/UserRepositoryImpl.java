@@ -18,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import dev.waamir.hotelaluraapi.application.enumeration.EmailType;
 import dev.waamir.hotelaluraapi.application.model.EmailDetails;
 import dev.waamir.hotelaluraapi.domain.model.AccountVerification;
 import dev.waamir.hotelaluraapi.domain.model.Guest;
@@ -73,9 +74,11 @@ public class UserRepositoryImpl implements IUserRepository<User>{
                 Guest guest = Guest.builder()
                     .email(user.getUsername())
                     .build();
-                guestRepository.create(guest);
+                if (guestRepository.countByEmail(guest.getEmail()) == 0) {
+                    guestRepository.create(guest);
+                }
             }
-            EmailDetails emailDetails = new EmailDetails(user.getUsername(), emailService.getConfirmationMessage(verificationUrl  ), "Confirm Account");
+            EmailDetails emailDetails = new EmailDetails(user.getUsername(), emailService.getConfirmationMessage(verificationUrl  ), "Confirm Account", EmailType.CONFIRMATION);
             emailService.sendEmail(emailDetails);
 
             return user;
