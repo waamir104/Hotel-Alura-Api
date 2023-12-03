@@ -11,8 +11,8 @@ public record BookingRequest (
     LocalDate checkOut,
     Double totalPrice,
     @NotNull
-    long guestId,
+    String guestEmail,
     @NotNull
-    long roomId
+    long roomNumber
 ) {
 }
