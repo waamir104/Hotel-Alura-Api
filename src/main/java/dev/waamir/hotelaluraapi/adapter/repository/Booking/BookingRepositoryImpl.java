@@ -41,4 +41,9 @@ public class BookingRepositoryImpl implements IBookingRepository<Booking> {
         return bookingJpaRepository.findAll(pagination);
     }
 
+    @Override
+    public Page<Booking> listByGuestEmail(String email, Pageable pagination) {
+        return bookingJpaRepository.findByGuestEmail(email, pagination);
+    }
+
 }

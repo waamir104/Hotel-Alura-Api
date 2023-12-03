@@ -38,5 +38,10 @@ public class BookingServiceImpl implements IBookingService<Booking> {
     public Page<Booking> list(Pageable pagination) {
         return bookingRepository.list(pagination);
     }
+
+    @Override
+    public Page<Booking> listByGuestEmail(String email, Pageable pagination) {
+        return bookingRepository.listByGuestEmail(email, pagination);
+    }
     
 }

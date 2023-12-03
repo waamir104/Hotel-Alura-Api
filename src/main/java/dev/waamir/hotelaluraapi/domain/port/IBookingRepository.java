@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 public interface IBookingRepository<T extends Booking> {
     T create(T booking);
     Optional<T> getById(Long id);
+    Page<T> listByGuestEmail(String email, Pageable pagination);
     void delete(T booking);
     void update(T booking);
     Page<T> list(Pageable pagination);
