@@ -6,10 +6,11 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 public record RoomDto(
+    @NotNull Long id,
     @NotNull @Positive Long number,
     @NotEmpty String description) {
         
     public RoomDto(Room room) {
-        this(room.getNumber(), room.getDescription());
+        this(room.getId(), room.getNumber(), room.getDescription());
     }
 }

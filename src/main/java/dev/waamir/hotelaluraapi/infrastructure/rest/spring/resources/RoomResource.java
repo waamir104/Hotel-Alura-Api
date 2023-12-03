@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import dev.waamir.hotelaluraapi.adapter.dto.resource.MessageResponse;
 import dev.waamir.hotelaluraapi.adapter.dto.resource.Room.CreateRoomRequest;
 import dev.waamir.hotelaluraapi.adapter.dto.resource.Room.RoomDto;
 import dev.waamir.hotelaluraapi.domain.model.Room;
@@ -54,7 +55,7 @@ public class RoomResource {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register (
+    public ResponseEntity<MessageResponse> register (
         @RequestBody @Valid CreateRoomRequest request
     ) {
         RoomType roomType = roomTypeRepository.getByName(request.roomTypeName()).orElseThrow(
@@ -67,14 +68,18 @@ public class RoomResource {
             .description(request.description())
             .roomType(roomType)
             .build();
-        roomRepository.create(room);
+        room = roomRepository.create(room);
         return ResponseEntity
             .status(HttpStatus.CREATED)
-            .body("");
+            .body(
+                MessageResponse.builder()
+                    .message(String.format("Room registered with id: %d", room.getId()))
+                    .build()
+            );
     }
 
     @PutMapping("/update")
-    public ResponseEntity<String> update (
+    public ResponseEntity<MessageResponse> update (
         @RequestBody @Valid RoomDto dto
     ) {
         Room dbRoom = roomRepository.getByNumber(dto.number())
@@ -91,6 +96,10 @@ public class RoomResource {
         roomRepository.update(room);
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body("");
+            .body(
+                MessageResponse.builder()
+                    .message("Room updated successfully")
+                    .build()
+            );
     }
 }
