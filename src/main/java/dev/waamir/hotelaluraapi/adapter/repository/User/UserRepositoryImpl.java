@@ -30,9 +30,9 @@ import dev.waamir.hotelaluraapi.domain.port.IGuestRepository;
 import dev.waamir.hotelaluraapi.domain.port.IRoleRepository;
 import dev.waamir.hotelaluraapi.domain.port.IUserRepository;
 import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.ApiException;
+import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.ApiNotFoundException;
 import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.DuplicateRecordException;
 import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.UserAlreadyEnabledException;
-import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 import static dev.waamir.hotelaluraapi.application.enumeration.VerificationType.*;
@@ -95,7 +95,7 @@ public class UserRepositoryImpl implements IUserRepository<User>{
             wantedUser.setRole(wantedRole);
             return Optional.of(wantedUser);
         } catch (Exception e) {
-            throw new UserNotFoundException("");
+            throw new ApiNotFoundException("User not found.");
         }
     }
     
@@ -107,7 +107,7 @@ public class UserRepositoryImpl implements IUserRepository<User>{
             wantedUser.setRole(wantedRole);
             return Optional.of(wantedUser);
         } catch (Exception e) {
-            throw new UserNotFoundException("");
+            throw new ApiNotFoundException("User not found.");
         }
     }
 
