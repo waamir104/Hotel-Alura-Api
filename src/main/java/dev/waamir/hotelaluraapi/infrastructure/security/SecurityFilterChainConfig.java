@@ -23,10 +23,12 @@ public class SecurityFilterChainConfig {
     private final AuthenticationProvider authenticationProvider;
         
     private static final String[] WHITE_LIST_URLS = {
-        "/api/v1/user/**", "/api/v1/room/list", "/api/v1/room/number/{number}"
+        "/api/v1/user/**", "/api/v1/room/list", "/api/v1/room/number/{number}",
+         "/api/v1/roomType/list"
     };
     private static final String[] GET_ADMIN_WORKER_PATHS = {
-        "api/v1/guest/list", "api/v1/guest/idNumber/{idNumber}", "api/v1/guest/email/{email}", "/api/v1/booking/list", "/api/v1/booking/{id}"
+        "api/v1/guest/list", "api/v1/guest/idNumber/{idNumber}", "api/v1/guest/email/{email}",
+         "/api/v1/booking/list", "/api/v1/booking/{id}"
     };
     private static final String[] PUT_ADMIN_WORKER_PATHS = {
         "api/v1/guest/update", "/api/v1/booking/update", "/api/v1/bookingPaymentType/update"
@@ -38,16 +40,17 @@ public class SecurityFilterChainConfig {
         "/api/v1/bookingPaymentType/delete/{id}"
     };
     private static final String[] POST_ADMIN_PATHS = {
-        "/api/v1/room/register", "/api/v1/paymentType/register"
+        "/api/v1/room/register", "/api/v1/paymentType/register", "/api/v1/roomType/register"
     };
     private static final String[] PUT_ADMIN_PATHS = {
-        "api/v1/room/update"
+        "api/v1/room/update", "/api/v1/roomType/update"
     };
     private static final String[] DELETE_ADMIN_PATHS = {
-        "/api/v1/paymentType/delete/{id}"
+        "/api/v1/paymentType/delete/{id}", "/api/v1/roomType/delete/{id}"
     };
     private static final String[] GET_ADMIN_WORKER_GUEST_PATHS = {
-         "/api/v1/paymentType/list",  "/api/v1/paymentType/name/{name}", "/api/v1/paymentType/id/{id}", "/api/v1/booking/list/{guestEmail}", "/api/v1/bookingPaymentType/booking/{id}"
+         "/api/v1/paymentType/list",  "/api/v1/paymentType/name/{name}", "/api/v1/paymentType/id/{id}",
+        "/api/v1/booking/list/{guestEmail}", "/api/v1/bookingPaymentType/booking/{id}"
     };
     private static final String[] POST_ADMIN_WORKER_GUEST_PATHS = {
         "/api/v1/bookingPaymentType/register"
