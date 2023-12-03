@@ -54,17 +54,6 @@ public class ExceptionHandlerAdvice {
             );
     }
 
-    @ExceptionHandler(UserNotFoundException.class) 
-    public ResponseEntity<MessageResponse> handleUserNotFound() {
-        return ResponseEntity
-            .status(HttpStatus.NOT_FOUND)
-            .body(
-                MessageResponse.builder()
-                    .message("User not found")
-                    .build()
-            );
-    }
-
     @ExceptionHandler(DuplicateRecordException.class)
     public ResponseEntity<MessageResponse> handleDuplicateRecord(DuplicateRecordException e) {
         return ResponseEntity
@@ -83,28 +72,6 @@ public class ExceptionHandlerAdvice {
             .body(
                 MessageResponse.builder()
                     .message("Account has already been enabled")   
-                    .build()
-            );
-    }
-
-    @ExceptionHandler(RoomNotFoundException.class)
-    public ResponseEntity<MessageResponse> handleRoomNotFound() {
-        return ResponseEntity
-            .status(HttpStatus.NOT_FOUND)
-            .body(
-                MessageResponse.builder()
-                    .message("Room not found.")
-                    .build()
-            );
-    }
-
-    @ExceptionHandler(RoomTypeNotFoundException.class)
-    public ResponseEntity<MessageResponse> handleRoomTypeNotFound() {
-        return ResponseEntity
-            .status(HttpStatus.NOT_FOUND)
-            .body(
-                MessageResponse.builder()
-                    .message("Room type not found.")
                     .build()
             );
     }

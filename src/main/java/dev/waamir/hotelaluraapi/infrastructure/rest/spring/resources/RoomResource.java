@@ -20,8 +20,7 @@ import dev.waamir.hotelaluraapi.domain.model.Room;
 import dev.waamir.hotelaluraapi.domain.model.RoomType;
 import dev.waamir.hotelaluraapi.domain.port.IRoomRepository;
 import dev.waamir.hotelaluraapi.domain.port.IRoomTypeRepository;
-import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.RoomNotFoundException;
-import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.RoomTypeNotFoundException;
+import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.ApiNotFoundException;
 import jakarta.validation.Valid;
 
 @RestController
@@ -47,7 +46,7 @@ public class RoomResource {
         return ResponseEntity.ok(
             new RoomDto(
                 roomRepository.getByNumber(number).orElseThrow(() -> {
-                        throw new RoomNotFoundException("");
+                        throw new ApiNotFoundException("Room not found.");
                     }
                 )
             )
@@ -60,7 +59,7 @@ public class RoomResource {
     ) {
         RoomType roomType = roomTypeRepository.getByName(request.roomTypeName()).orElseThrow(
             () -> {
-                throw new RoomTypeNotFoundException("");
+                throw new ApiNotFoundException("Room type not found.");
             }
         );
         Room room = Room.builder()
@@ -80,7 +79,7 @@ public class RoomResource {
     ) {
         Room dbRoom = roomRepository.getByNumber(dto.number())
             .orElseThrow(() -> {
-                throw new RoomNotFoundException("");
+                throw new ApiNotFoundException("Room not found.");
             });
         Room room = Room.builder()
             .id(dbRoom.getId())

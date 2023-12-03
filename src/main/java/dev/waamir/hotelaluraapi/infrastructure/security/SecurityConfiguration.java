@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 import dev.waamir.hotelaluraapi.domain.model.User;
 import dev.waamir.hotelaluraapi.domain.port.IUserRepository;
-import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.UserNotFoundException;
+import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.ApiNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @Configuration
@@ -20,7 +20,7 @@ public class SecurityConfiguration {
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> userRepository.getByUsername(username)
-            .orElseThrow(() -> new UserNotFoundException("User not found"));
+            .orElseThrow(() -> new ApiNotFoundException("User not found"));
     }
 
     @Bean

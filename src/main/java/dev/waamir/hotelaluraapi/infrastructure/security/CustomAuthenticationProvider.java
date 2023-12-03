@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 
 import dev.waamir.hotelaluraapi.domain.model.User;
 import dev.waamir.hotelaluraapi.domain.port.IUserRepository;
+import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.ApiNotFoundException;
 import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.UserDisabledException;
-import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.UserNotFoundException;
 import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.WrongCredentialsException;
 import io.micrometer.common.util.StringUtils;
 
@@ -36,7 +36,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         try {
             user = userRepository.getByUsername(username)
                 .orElseThrow(() -> {
-                    throw new UserNotFoundException("");
+                    throw new ApiNotFoundException("User not found.");
                 });
         } catch (UsernameNotFoundException e) {
             throw new WrongCredentialsException("");

@@ -28,8 +28,6 @@ import dev.waamir.hotelaluraapi.domain.port.IBookingRepository;
 import dev.waamir.hotelaluraapi.domain.port.IGuestRepository;
 import dev.waamir.hotelaluraapi.domain.port.IRoomRepository;
 import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.ApiNotFoundException;
-import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.GuestNotFoundException;
-import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.RoomNotFoundException;
 
 @RestController
 @RequestMapping("/api/v1/booking")
@@ -60,7 +58,7 @@ public class BookingResource {
     ) {
         Guest guest = guestRepository.getByEmail(email).orElseThrow(
             () -> {
-                throw new GuestNotFoundException("");
+                throw new ApiNotFoundException("Guest not found.");
             }
         );
         return ResponseEntity
@@ -76,7 +74,7 @@ public class BookingResource {
     ) {
         Booking booking = bookingRepository.getById(id).orElseThrow(
             () -> {
-                throw new ApiNotFoundException("");
+                throw new ApiNotFoundException("Booking not found.");
             }
         );
         return ResponseEntity
@@ -92,12 +90,12 @@ public class BookingResource {
     ) {
         Guest guest = guestRepository.getByEmail(requestDto.guestEmail()).orElseThrow(
             () -> {
-                throw new GuestNotFoundException("");
+                throw new ApiNotFoundException("Guest not found.");
             }
         );
         Room room = roomRepository.getByNumber(requestDto.roomNumber()).orElseThrow(
             () -> {
-                throw new RoomNotFoundException("");
+                throw new ApiNotFoundException("Room not found.");
             }
         );
         RoomType roomType = room.getRoomType();
@@ -126,7 +124,7 @@ public class BookingResource {
     ) {
         Booking booking = bookingRepository.getById(requestDto.id()).orElseThrow(
             () -> {
-                throw new ApiNotFoundException("");
+                throw new ApiNotFoundException("Booking not found");
             }
         );
         booking.setCheckIn(requestDto.checkIn());
