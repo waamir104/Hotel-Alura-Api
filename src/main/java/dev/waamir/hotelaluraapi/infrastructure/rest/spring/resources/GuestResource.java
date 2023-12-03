@@ -26,7 +26,7 @@ import dev.waamir.hotelaluraapi.domain.model.Guest;
 import dev.waamir.hotelaluraapi.domain.port.IEmailService;
 import dev.waamir.hotelaluraapi.domain.port.IGuestRepository;
 import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.DuplicateRecordException;
-import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.GuestNotFoundException;
+import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.ApiNotFoundException;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -54,7 +54,7 @@ public class GuestResource {
 			.idNumber(request.idNumber())
 			.birthDate(request.birthDate())
 			.build();
-		guestRepository.create(guest);
+		guest = guestRepository.create(guest);
 		EmailDetails emailDetails = EmailDetails.builder()
             .recipient(guest.getEmail())
             .subject("Welcome!!")
@@ -66,7 +66,7 @@ public class GuestResource {
 			.status(HttpStatus.OK)
 			.body(
 				MessageResponse.builder()
-					.message("Guest registered successfully")	
+					.message(String.format("Guest registered with id: %d", guest.getId()))	
 					.build()
 			);
 	}
@@ -81,7 +81,7 @@ public class GuestResource {
 		if (!guestOp.isPresent()){
 			guest = guestRepository.getByIdNumber(request.idNumber()).orElseThrow(
 				() -> {
-					throw new GuestNotFoundException("");
+					throw new ApiNotFoundException("Guest not found");
 				}
 			);
 		} else {
@@ -135,7 +135,7 @@ public class GuestResource {
 	public ResponseEntity<GuestDto> fetchByIdNumber(@PathVariable @NotNull @Positive Long idNumber) {
 		Guest guest = guestRepository.getByIdNumber(idNumber).orElseThrow(
 			() -> {
-				throw new GuestNotFoundException("");
+				throw new ApiNotFoundException("");
 			}
 		);
 		return ResponseEntity
@@ -149,7 +149,7 @@ public class GuestResource {
 	public ResponseEntity<GuestDto> fetchByIdNumber(@PathVariable @NotNull @Email String email) {
 		Guest guest = guestRepository.getByEmail(email).orElseThrow(
 			() -> {
-				throw new GuestNotFoundException("");
+				throw new ApiNotFoundException("");
 			}
 		);
 		return ResponseEntity

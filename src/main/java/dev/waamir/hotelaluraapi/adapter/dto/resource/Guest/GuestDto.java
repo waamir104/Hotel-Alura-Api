@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import dev.waamir.hotelaluraapi.domain.model.Guest;
 
 public record GuestDto(
+	Long id,
 	Long idNumber,
 	String name,
 	String lastName,
@@ -15,6 +16,7 @@ public record GuestDto(
 	
 	public GuestDto(Guest guest) {
 		this(
+			guest.getId(),
 			guest.getIdNumber(),
 			guest.getName(),
 			guest.getLastName(),
