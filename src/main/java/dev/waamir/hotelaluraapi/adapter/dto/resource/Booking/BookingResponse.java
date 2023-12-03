@@ -2,8 +2,6 @@ package dev.waamir.hotelaluraapi.adapter.dto.resource.Booking;
 
 import java.time.LocalDate;
 
-import dev.waamir.hotelaluraapi.adapter.dto.resource.Guest.GuestDto;
-import dev.waamir.hotelaluraapi.adapter.dto.resource.Room.RoomDto;
 import dev.waamir.hotelaluraapi.domain.model.Booking;
 import jakarta.validation.constraints.NotNull;
 
@@ -16,9 +14,9 @@ public record BookingResponse (
     LocalDate checkOut,
     Double totalPrice,
     @NotNull
-    GuestDto guestDto,
+    Long guestId,
     @NotNull
-    RoomDto roomDto
+    Long roomId
 ) {
     public BookingResponse(Booking booking) {
         this(
@@ -26,8 +24,8 @@ public record BookingResponse (
             booking.getCheckIn(),
             booking.getCheckOut(),
             booking.getTotalPrice(),
-            new GuestDto(booking.getGuest()),
-            new RoomDto(booking.getRoom())
+            booking.getGuest().getId(),
+            booking.getRoom().getId()
         );
     }
 }
