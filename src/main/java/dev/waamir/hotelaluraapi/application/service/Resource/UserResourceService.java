@@ -16,7 +16,7 @@ import dev.waamir.hotelaluraapi.domain.model.User;
 import dev.waamir.hotelaluraapi.domain.port.IRoleRepository;
 import dev.waamir.hotelaluraapi.domain.port.IUserRepository;
 import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.ApiException;
-import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.UserNotFoundException;
+import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.ApiNotFoundException;
 import dev.waamir.hotelaluraapi.infrastructure.security.JWT.JwtService;
 import lombok.RequiredArgsConstructor;
 
@@ -46,7 +46,7 @@ public class UserResourceService {
     }
 
     public UserResponse authenticate(UserRequest userRequest) {
-        if (userRepository.getUsernameCount(userRequest.getUsername()) != 1) throw new UserNotFoundException("");
+        if (userRepository.getUsernameCount(userRequest.getUsername()) != 1) throw new ApiNotFoundException("User not found.");
         authManager.authenticate(
             new UsernamePasswordAuthenticationToken(
                 userRequest.getUsername(),
