@@ -19,7 +19,8 @@ import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.ApiNotFound
 import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.DuplicateRecordException;
 import jakarta.validation.Valid;
 import dev.waamir.hotelaluraapi.adapter.dto.resource.MessageResponse;
-import dev.waamir.hotelaluraapi.adapter.dto.resource.PaymentType.PaymentTypeDto;
+import dev.waamir.hotelaluraapi.adapter.dto.resource.PaymentType.PaymentTypeRequest;
+import dev.waamir.hotelaluraapi.adapter.dto.resource.PaymentType.PaymentTypeResponse;
 
 @RestController
 @RequestMapping("/api/v1/paymentType")
@@ -29,7 +30,7 @@ public class PaymentTypeResource {
     private IPaymentTypeRepository<PaymentType> paymentTypeRepository;
 
     @GetMapping("/name/{name}")
-    public ResponseEntity<PaymentTypeDto> fetchByName(
+    public ResponseEntity<PaymentTypeResponse> fetchByName(
         @PathVariable @Valid String name
     ) {
         PaymentType paymentType = paymentTypeRepository.getByName(name).orElseThrow(
@@ -40,12 +41,12 @@ public class PaymentTypeResource {
         return ResponseEntity
             .status(200)
             .body(
-                new PaymentTypeDto(paymentType)
+                new PaymentTypeResponse(paymentType)
             );
     }
 
     @GetMapping("/id/{id}")
-    public ResponseEntity<PaymentTypeDto> fetchById(
+    public ResponseEntity<PaymentTypeResponse> fetchById(
         @PathVariable @Valid Long id
     ) {
         PaymentType paymentType = paymentTypeRepository.getById(id).orElseThrow(
@@ -56,33 +57,33 @@ public class PaymentTypeResource {
         return ResponseEntity
             .status(200)
             .body(
-                new PaymentTypeDto(paymentType)
+                new PaymentTypeResponse(paymentType)
             );
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<PaymentTypeDto>> list() {
+    public ResponseEntity<List<PaymentTypeResponse>> list() {
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(
-                paymentTypeRepository.list().stream().map(PaymentTypeDto::new).toList()
+                paymentTypeRepository.list().stream().map(PaymentTypeResponse::new).toList()
             );
     }
     
     @PostMapping("/register")
     public ResponseEntity<MessageResponse> register(
-        @RequestBody @Valid PaymentTypeDto request
+        @RequestBody @Valid PaymentTypeRequest request
     ) {
         if (paymentTypeRepository.countByName(request.name()) != 0) throw new DuplicateRecordException("Payment type already exists.");
         PaymentType newPaymentType = PaymentType.builder()
             .name(request.name())
             .build();
-        paymentTypeRepository.create(newPaymentType);
+        newPaymentType = paymentTypeRepository.create(newPaymentType);
         return ResponseEntity
             .status(HttpStatus.CREATED)
             .body(
                 MessageResponse.builder()
-                    .message("Payment type registered successfully")
+                    .message(String.format("Payment type registered with id: %d", newPaymentType.getId()))
                     .build()
             );
     }
