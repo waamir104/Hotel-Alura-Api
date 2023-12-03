@@ -1,1 +1,2 @@
 °  Test PaymentTypeResource endpoints
+°  Test BookingResource endpoints
