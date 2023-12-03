@@ -86,4 +86,15 @@ public class ExceptionHandlerAdvice {
                     .build()
             );
     }
+
+    @ExceptionHandler(GenericException.class)
+    public ResponseEntity<MessageResponse> handleGeneric(GenericException e) {
+        return ResponseEntity
+            .status(e.getStatus())
+            .body(
+                MessageResponse.builder()
+                    .message(e.getMessage())
+                    .build()
+            );
+    }
 }
