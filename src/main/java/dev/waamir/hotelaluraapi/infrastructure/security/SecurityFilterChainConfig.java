@@ -26,13 +26,13 @@ public class SecurityFilterChainConfig {
         "/api/v1/user/**", "/api/v1/room/list", "/api/v1/room/number/{number}"
     };
     private static final String[] GET_ADMIN_WORKER_PATHS = {
-        "api/v1/guest/list", "api/v1/guest/idNumber/{idNumber}", "api/v1/guest/email/{email}"
+        "api/v1/guest/list", "api/v1/guest/idNumber/{idNumber}", "api/v1/guest/email/{email}", "/api/v1/booking/list", "/api/v1/booking/{id}"
     };
     private static final String[] PUT_ADMIN_WORKER_PATHS = {
-        "api/v1/guest/update"
+        "api/v1/guest/update", "/api/v1/booking/update"
     };
     private static final String[] POST_ADMIN_WORKER_PATHS = {
-        "api/v1/guest/register"
+        "api/v1/guest/register", "/api/v1/booking/register"
     };
     private static final String[] POST_ADMIN_PATHS = {
         "/api/v1/room/register", "/api/v1/paymentType/register"
@@ -44,7 +44,7 @@ public class SecurityFilterChainConfig {
         "/api/v1/paymentType/delete/{id}"
     };
     private static final String[] GET_ADMIN_WORKER_GUEST_PATHS = {
-         "/api/v1/paymentType/list",  "/api/v1/paymentType/name/{name}", "/api/v1/paymentType/id/{id}"
+         "/api/v1/paymentType/list",  "/api/v1/paymentType/name/{name}", "/api/v1/paymentType/id/{id}", "/api/v1/booking/list/{guestEmail}"
     };
 
     @Bean
