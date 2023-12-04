@@ -2,3 +2,5 @@
 °  Test BookingResource endpoints
 °  Test BookingPaymentTypeResource endpoints
 °  Test RoomTypeResource endpoints
+
+°  Add and implement the method to allow the user to update the password
