@@ -21,7 +21,10 @@ public class RoleResource {
 
     @GetMapping("/list")
     public ResponseEntity<List<RoleResponse>> list() {
-        // TODO implement the logic
-        return null;
+        return ResponseEntity
+            .status(200)
+            .body(
+                roleRepository.list().stream().map(RoleResponse::new).toList()
+            );
     }
 }
