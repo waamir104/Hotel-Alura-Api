@@ -2,6 +2,7 @@ package dev.waamir.hotelaluraapi.infrastructure.rest.spring.resources;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -15,6 +16,7 @@ import dev.waamir.hotelaluraapi.adapter.dto.resource.Auth.AuthRequest;
 import dev.waamir.hotelaluraapi.adapter.dto.resource.Auth.AuthResponse;
 import dev.waamir.hotelaluraapi.application.service.Resource.AuthResourceService;
 import jakarta.transaction.Transactional;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -49,5 +51,13 @@ public class AuthResource {
     ) {
         String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("api/v1/user/verify/" + type + "/" + encodedUserId).toUriString();
         return ResponseEntity.ok(userResourceService.verify(type, encodedUserId, url));
+    }
+
+    @GetMapping("/resetPwd/{username}")
+    public ResponseEntity<MessageResponse> resetPwd(
+        @PathVariable @NotEmpty String username
+    ) {
+        // TODO implement the logic
+        return null;
     }
 }
