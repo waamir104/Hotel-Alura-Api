@@ -48,7 +48,7 @@ public class SecurityFilterChainConfig {
     };
     private static final String[] GET_ADMIN_PATHS = {
         "/api/v1/role/list", "/api/v1/user/list", "/api/v1/user/id/{id}",
-        "/api/v1/user/email/{email}"
+        "/api/v1/user/username/{username}"
     };
     private static final String[] DELETE_ADMIN_PATHS = {
         "/api/v1/paymentType/delete/{id}", "/api/v1/roomType/delete/{id}"
