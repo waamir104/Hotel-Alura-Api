@@ -45,6 +45,9 @@ public class SecurityFilterChainConfig {
     private static final String[] PUT_ADMIN_PATHS = {
         "api/v1/room/update", "/api/v1/roomType/update"
     };
+    private static final String[] GET_ADMIN_PATHS = {
+        "/api/v1/role/list"
+    };
     private static final String[] DELETE_ADMIN_PATHS = {
         "/api/v1/paymentType/delete/{id}", "/api/v1/roomType/delete/{id}"
     };
@@ -66,6 +69,7 @@ public class SecurityFilterChainConfig {
                 .requestMatchers(HttpMethod.POST, POST_ADMIN_PATHS).hasAuthority("ADMIN")
                 .requestMatchers(HttpMethod.PUT, PUT_ADMIN_PATHS).hasAuthority("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, DELETE_ADMIN_PATHS).hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.GET, GET_ADMIN_PATHS).hasAuthority("ADMIN")
                 .requestMatchers(HttpMethod.POST, POST_ADMIN_WORKER_PATHS).hasAnyAuthority("ADMIN", "WORKER")
                 .requestMatchers(HttpMethod.PUT, PUT_ADMIN_WORKER_PATHS).hasAnyAuthority("ADMIN", "WORKER")
                 .requestMatchers(HttpMethod.GET, GET_ADMIN_WORKER_PATHS).hasAnyAuthority("ADMIN", "WORKER")
