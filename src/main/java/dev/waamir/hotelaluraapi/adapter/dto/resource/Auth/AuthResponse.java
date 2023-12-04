@@ -1,4 +1,4 @@
-package dev.waamir.hotelaluraapi.adapter.dto.resource.User;
+package dev.waamir.hotelaluraapi.adapter.dto.resource.Auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserResponse {
+public class AuthResponse {
     private String token;
     private String role;
 }

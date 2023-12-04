@@ -23,8 +23,8 @@ public class SecurityFilterChainConfig {
     private final AuthenticationProvider authenticationProvider;
         
     private static final String[] WHITE_LIST_URLS = {
-        "/api/v1/user/**", "/api/v1/room/list", "/api/v1/room/number/{number}",
-         "/api/v1/roomType/list"
+        "api/v1/auth/**", "/api/v1/room/list", "/api/v1/room/number/{number}",
+        "/api/v1/roomType/list"
     };
     private static final String[] GET_ADMIN_WORKER_PATHS = {
         "api/v1/guest/list", "api/v1/guest/idNumber/{idNumber}", "api/v1/guest/email/{email}",

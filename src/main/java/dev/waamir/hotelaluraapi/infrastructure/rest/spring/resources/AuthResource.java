@@ -11,23 +11,23 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import dev.waamir.hotelaluraapi.adapter.dto.resource.MessageResponse;
-import dev.waamir.hotelaluraapi.adapter.dto.resource.User.UserRequest;
-import dev.waamir.hotelaluraapi.adapter.dto.resource.User.UserResponse;
-import dev.waamir.hotelaluraapi.application.service.Resource.UserResourceService;
+import dev.waamir.hotelaluraapi.adapter.dto.resource.Auth.AuthRequest;
+import dev.waamir.hotelaluraapi.adapter.dto.resource.Auth.AuthResponse;
+import dev.waamir.hotelaluraapi.application.service.Resource.AuthResourceService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("api/v1/user")
+@RequestMapping("api/v1/auth")
 @RequiredArgsConstructor
-public class UserResource {
+public class AuthResource {
 
-    private final UserResourceService userResourceService;
+    private final AuthResourceService userResourceService;
     
     @PostMapping("/register")
     @Transactional
-    public ResponseEntity<UserResponse> register(
-        @RequestBody UserRequest userRequest
+    public ResponseEntity<AuthResponse> register(
+        @RequestBody AuthRequest userRequest
     ) {
         return ResponseEntity
             .status(HttpStatus.CREATED)
@@ -35,8 +35,8 @@ public class UserResource {
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<UserResponse> authenticate(
-        @RequestBody UserRequest userRequest
+    public ResponseEntity<AuthResponse> authenticate(
+        @RequestBody AuthRequest userRequest
     ) {
         return ResponseEntity.ok(userResourceService.authenticate(userRequest));
     }
