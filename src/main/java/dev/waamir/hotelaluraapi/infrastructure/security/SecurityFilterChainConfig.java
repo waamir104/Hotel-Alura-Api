@@ -40,13 +40,15 @@ public class SecurityFilterChainConfig {
         "/api/v1/bookingPaymentType/delete/{id}"
     };
     private static final String[] POST_ADMIN_PATHS = {
-        "/api/v1/room/register", "/api/v1/paymentType/register", "/api/v1/roomType/register"
+        "/api/v1/room/register", "/api/v1/paymentType/register", "/api/v1/roomType/register",
+        "/api/v1/user/register"
     };
     private static final String[] PUT_ADMIN_PATHS = {
-        "api/v1/room/update", "/api/v1/roomType/update"
+        "api/v1/room/update", "/api/v1/roomType/update", "/api/v1/user/update"
     };
     private static final String[] GET_ADMIN_PATHS = {
-        "/api/v1/role/list"
+        "/api/v1/role/list", "/api/v1/user/list", "/api/v1/user/id/{id}",
+        "/api/v1/user/email/{email}"
     };
     private static final String[] DELETE_ADMIN_PATHS = {
         "/api/v1/paymentType/delete/{id}", "/api/v1/roomType/delete/{id}"
