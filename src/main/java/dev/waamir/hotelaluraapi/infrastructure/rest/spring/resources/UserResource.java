@@ -1,7 +1,9 @@
 package dev.waamir.hotelaluraapi.infrastructure.rest.spring.resources;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +19,12 @@ import dev.waamir.hotelaluraapi.adapter.dto.resource.MessageResponse;
 import dev.waamir.hotelaluraapi.adapter.dto.resource.User.UserRegisterRequest;
 import dev.waamir.hotelaluraapi.adapter.dto.resource.User.UserResponse;
 import dev.waamir.hotelaluraapi.adapter.dto.resource.User.UserUpdateRequest;
+import dev.waamir.hotelaluraapi.domain.model.Role;
 import dev.waamir.hotelaluraapi.domain.model.User;
+import dev.waamir.hotelaluraapi.domain.port.IRoleRepository;
 import dev.waamir.hotelaluraapi.domain.port.IUserRepository;
+import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.ApiNotFoundException;
+import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.DuplicateRecordException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -29,44 +35,101 @@ public class UserResource {
     
     @Autowired
     private IUserRepository<User> userRepository;
+    @Autowired
+    private IRoleRepository<Role> roleRepository;
 
     @PostMapping("/register")
     public ResponseEntity<MessageResponse> register (
         @RequestBody @Valid UserRegisterRequest request
     ) {
-        // TODO implement the logic
-        return null;
+        if (userRepository.getUsernameCount(request.username()) != 0) throw new DuplicateRecordException("User already exists.");
+        Role role = roleRepository.getById(request.roleId()).orElseThrow(
+            () -> {
+                throw new ApiNotFoundException("Role not found.");
+            }
+        );
+        User user = User.builder()
+            .username(request.username())
+            .password(request.password())
+            .createdAt(LocalDateTime.now())
+            .role(role)
+            .build();
+        user = userRepository.create(user);
+        return ResponseEntity
+            .status(200)
+            .body(
+                MessageResponse.builder()
+                    .message(String.format("User registered with id: %d", user.getId()))
+                    .build()
+            );
     }
 
     @GetMapping("/list")
-    public ResponseEntity<Page<UserResponse>> list (
+    public ResponseEntity<List<UserResponse>> list (
         @PageableDefault(size = 10) Pageable pagination
     ) {
-        // TODO implement the logic
-        return null; 
+        return ResponseEntity
+            .status(200)
+            .body(
+                userRepository.list().stream().map(UserResponse::new).toList()
+            ); 
     }
 
     @GetMapping("/id/{id}")
     public ResponseEntity<UserResponse> fetchById (
         @PathVariable @NotNull Long id
     ) {
-        // TODO implement the logic
-        return null;
+        User user = userRepository.getById(id).orElseThrow(
+            () -> {
+                throw new ApiNotFoundException("User not found.");
+            }
+        );
+        return ResponseEntity
+            .status(200)
+            .body(
+                new UserResponse(user)
+            );
     }
 
-    @GetMapping("/email/{email}")
+    @GetMapping("/username/{username}")
     public ResponseEntity<UserResponse> fetchById (
-        @PathVariable @NotEmpty String email
+        @PathVariable @NotEmpty String username
     ) {
-        // TODO implement the logic
-        return null;
+        User user = userRepository.getByUsername(username).orElseThrow(
+            () -> {
+                throw new ApiNotFoundException("User not found.");
+            }
+        );
+        return ResponseEntity
+            .status(200)
+            .body(
+                new UserResponse(user)
+            );
     }
 
     @PutMapping("/update")
     public ResponseEntity<MessageResponse> update (
         @RequestBody @Valid UserUpdateRequest request
     ) {
-        // TODO implement the logic
-        return null;
+        User user = userRepository.getById(request.id()).orElseThrow(
+            () -> {
+                throw new ApiNotFoundException("User not found.");
+            }
+        );
+        Role role = roleRepository.getById(request.roleId()).orElseThrow(
+            () -> {
+                throw new ApiNotFoundException("Role not found.");
+            }
+        );
+        user.setUsername(request.username());
+        user.setRole(role);
+        userRepository.update(user);
+        return ResponseEntity
+            .status(200)
+            .body(
+                MessageResponse.builder()
+                    .message("User updated successfully")
+                    .build()
+            );
     }
 }
