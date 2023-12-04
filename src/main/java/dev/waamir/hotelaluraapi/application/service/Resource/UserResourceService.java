@@ -42,6 +42,7 @@ public class UserResourceService {
         String jwt = jwtService.generateJwt(user);
         return UserResponse.builder()
             .token(jwt)
+            .role(user.getRole().getName())
             .build();
     }
 
@@ -58,6 +59,7 @@ public class UserResourceService {
         String jwt = jwtService.generateJwt(user);
         return UserResponse.builder()
             .token(jwt)
+            .role(user.getRole().getName())
             .build();
     }
     
