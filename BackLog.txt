@@ -5,3 +5,5 @@
 °  Test UserResource endpoints
 
 °  Add and implement the method to allow the user to update the password
+°  Add the mvc configuration
+°  Add the logout configuration to the Security Filter Chain Bean and the method implementation
