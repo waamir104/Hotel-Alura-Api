@@ -21,7 +21,8 @@ public class UserQueries {
     public static final String UPDATE_USER_QUERY = """
             UPDATE users SET
             role_id = :roleId,
-            enabled = :enabled
+            enabled = :enabled,
+            password = :password
             WHERE user_id = :id;
             """;
     public static final String SELECT_ALL_USERS_QUERY = """

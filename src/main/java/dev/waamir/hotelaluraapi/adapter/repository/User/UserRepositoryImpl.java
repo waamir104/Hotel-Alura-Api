@@ -129,7 +129,8 @@ public class UserRepositoryImpl implements IUserRepository<User>{
             SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("roleId", user.getRole().getId())
                 .addValue("enabled", user.isEnabled())
-                .addValue("id", user.getId());
+                .addValue("id", user.getId())
+                .addValue("password", user.getPassword());
             jdbc.update(UPDATE_USER_QUERY, parameters);
         } catch (Exception e) {
             throw new ApiException("An error ocurred updating the user. Please try again. \n\n" + e.getMessage());
@@ -164,7 +165,7 @@ public class UserRepositoryImpl implements IUserRepository<User>{
     }
 
     private String getVerificationUrl(String key, String type) {
-        return frontHost.concat("api/v1/user/verify/" + type + "/" + key);
+        return frontHost.concat("/verify/" + type + "/" + key);
     }
 
     private String encode(String id) {
