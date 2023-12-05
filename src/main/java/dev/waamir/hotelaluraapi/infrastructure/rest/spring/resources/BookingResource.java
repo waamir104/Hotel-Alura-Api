@@ -54,9 +54,9 @@ public class BookingResource {
     @GetMapping("/list/{guestEmail}")
     public ResponseEntity<Page<BookingResponse>> listByGuestEmail (
         @PageableDefault(size = 10) Pageable pagination,
-        @PathVariable String email
+        @PathVariable String guestEmail
     ) {
-        Guest guest = guestRepository.getByEmail(email).orElseThrow(
+        Guest guest = guestRepository.getByEmail(guestEmail).orElseThrow(
             () -> {
                 throw new ApiNotFoundException("Guest not found.");
             }
