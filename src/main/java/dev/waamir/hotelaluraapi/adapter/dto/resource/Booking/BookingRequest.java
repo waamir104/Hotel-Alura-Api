@@ -9,7 +9,6 @@ public record BookingRequest (
     LocalDate checkIn,
     @NotNull
     LocalDate checkOut,
-    Double totalPrice,
     @NotNull
     String guestEmail,
     @NotNull

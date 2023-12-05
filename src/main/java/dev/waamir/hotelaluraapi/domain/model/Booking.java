@@ -19,7 +19,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -39,21 +39,22 @@ public class Booking {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "booking_id")
 	private Long id;
-	@NotEmpty(message = "Check in Date cannot be empty")
+	@NotNull(message = "Check in Date cannot be empty")
 	@Column(nullable = false)
 	private LocalDate checkIn;
+	@NotNull(message = "Check out Date cannot be empty")
 	@Column(nullable = true)
 	private LocalDate checkOut;
 	@Column(nullable = true)
 	private double totalPrice;
 	
-	@NotEmpty
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "guest_id", nullable = false, foreignKey = @ForeignKey(name = "FK_bookings_guests"))
 	@OnDelete(action = OnDeleteAction.NO_ACTION)
 	private Guest guest;
 	
-	@NotEmpty
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "room_id", nullable = false, foreignKey = @ForeignKey(name = "FK_bookings_rooms"))
 	@OnDelete(action = OnDeleteAction.NO_ACTION)
