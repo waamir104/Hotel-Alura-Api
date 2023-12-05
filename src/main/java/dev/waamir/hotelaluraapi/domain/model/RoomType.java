@@ -15,6 +15,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -40,8 +41,8 @@ public class RoomType {
 	@Column(nullable = true)
 	private String description;
 	@Column(nullable = false)
-	@NotEmpty(message = "Price of room type cannot be null")
-	private double dailyPrice;
+	@NotNull(message = "Price of room type cannot be null")
+	private Double dailyPrice;
 	
 	@OneToMany(mappedBy = "roomType", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY)
 	@Cascade(org.hibernate.annotations.CascadeType.ALL)
