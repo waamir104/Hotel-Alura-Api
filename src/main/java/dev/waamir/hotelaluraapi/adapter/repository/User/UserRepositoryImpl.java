@@ -8,6 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64.Decoder;
 import java.util.Base64.Encoder;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -16,7 +17,6 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import dev.waamir.hotelaluraapi.application.enumeration.EmailType;
 import dev.waamir.hotelaluraapi.application.model.EmailDetails;
@@ -42,6 +42,9 @@ import static dev.waamir.hotelaluraapi.adapter.repository.User.UserQueries.*;
 @Repository
 @RequiredArgsConstructor
 public class UserRepositoryImpl implements IUserRepository<User>{
+
+    @Value("${application.front-end.host}")
+    private String frontHost;
     
     private final NamedParameterJdbcTemplate jdbc;
     private final PasswordEncoder passwordEncoder;
@@ -161,7 +164,7 @@ public class UserRepositoryImpl implements IUserRepository<User>{
     }
 
     private String getVerificationUrl(String key, String type) {
-        return ServletUriComponentsBuilder.fromCurrentContextPath().path("api/v1/user/verify/" + type + "/" + key).toUriString();
+        return frontHost.concat("api/v1/user/verify/" + type + "/" + key);
     }
 
     private String encode(String id) {

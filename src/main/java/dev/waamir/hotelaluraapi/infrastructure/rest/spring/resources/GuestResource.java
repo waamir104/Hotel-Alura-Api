@@ -4,6 +4,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import dev.waamir.hotelaluraapi.adapter.dto.resource.MessageResponse;
 import dev.waamir.hotelaluraapi.adapter.dto.resource.Guest.GuestDto;
@@ -34,6 +34,9 @@ import jakarta.validation.constraints.Positive;
 @RestController
 @RequestMapping("/api/v1/guest")
 public class GuestResource {
+
+	@Value("${application.front-end.host}")
+	private String frontHost;
 
 	@Autowired
 	private IGuestRepository<Guest> guestRepository;
@@ -160,7 +163,6 @@ public class GuestResource {
 	}
 
 	private String getRegistrationUrl() {
-		// TODO change to the front url
-        return ServletUriComponentsBuilder.fromCurrentContextPath().path("api/v1/user/register/").toUriString();
+        return frontHost.concat("/register");
     }
 }
