@@ -1,5 +1,6 @@
 package dev.waamir.hotelaluraapi.infrastructure.rest.spring.resources;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import dev.waamir.hotelaluraapi.adapter.dto.resource.MessageResponse;
 import dev.waamir.hotelaluraapi.adapter.dto.resource.Auth.AuthRequest;
@@ -24,6 +24,9 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("api/v1/auth")
 @RequiredArgsConstructor
 public class AuthResource {
+
+    @Value("${application.front-end.host}")
+    private String frontHost;
 
     private final AuthResourceService userResourceService;
     
@@ -50,7 +53,7 @@ public class AuthResource {
         @PathVariable String type,
         @PathVariable String encodedUserId
     ) {
-        String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("api/v1/user/verify/" + type + "/" + encodedUserId).toUriString();
+        String url = frontHost.concat("/verify/" + type + "/" + encodedUserId);
         return ResponseEntity.ok(userResourceService.verify(type, encodedUserId, url));
     }
 
