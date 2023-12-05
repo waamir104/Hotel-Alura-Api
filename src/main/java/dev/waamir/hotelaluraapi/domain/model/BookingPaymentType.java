@@ -12,7 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -30,17 +30,17 @@ public class BookingPaymentType {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "booking_payment_type_id")
 	private Long id;
-	@NotEmpty(message = "Payment percentage cannot be empty")
+	@NotNull(message = "Payment percentage cannot be empty")
 	@Column(nullable = false)
-	private double paymentPercentage;
+	private Double paymentPercentage;
 	
-	@NotEmpty
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "payment_type_id", nullable = false, foreignKey = @ForeignKey(name = "FK_booking_payment_types_payment_types"))
 	@OnDelete(action = OnDeleteAction.NO_ACTION)
 	private PaymentType paymentType;
 	
-	@NotEmpty
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "booking_id", nullable = false, foreignKey = @ForeignKey(name = "FK_booking_payment_types_bookings"))
 	@OnDelete(action = OnDeleteAction.NO_ACTION)
@@ -54,7 +54,7 @@ public class BookingPaymentType {
 		this.id = id;
 	}
 
-	public double getPaymentPercentage() {
+	public Double getPaymentPercentage() {
 		return paymentPercentage;
 	}
 
