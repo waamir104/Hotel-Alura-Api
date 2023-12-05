@@ -1,6 +1,9 @@
 application:
   title: Hotel Alura Api
   version: 1.0
+  # TODO Change to production host
+  front-end:
+    host: https://waamir.dev
 
   security:
     jwt:
