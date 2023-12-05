@@ -8,6 +8,7 @@ public class GenericException extends ApiException{
 
     public GenericException(String message, HttpStatusCode status) {
         super(message);
+        this.status = status;
     }
     
     public HttpStatusCode getStatus() {
