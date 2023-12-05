@@ -1,6 +1,5 @@
 °  Test BookingResource endpoints
 °  Test BookingPaymentTypeResource endpoints
-°  Test RoomTypeResource endpoints
 °  Test UserResource endpoints
 °  Test the mvc configuration
 
