@@ -1,4 +1,3 @@
-°  Test PaymentTypeResource endpoints
 °  Test BookingResource endpoints
 °  Test BookingPaymentTypeResource endpoints
 °  Test RoomTypeResource endpoints
