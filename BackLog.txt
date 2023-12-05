@@ -3,7 +3,6 @@
 °  Test BookingPaymentTypeResource endpoints
 °  Test RoomTypeResource endpoints
 °  Test UserResource endpoints
-°  Test AuthResource endpoints
 °  Test the mvc configuration
 
 °  Add the logout configuration to the Security Filter Chain Bean and the method implementation
