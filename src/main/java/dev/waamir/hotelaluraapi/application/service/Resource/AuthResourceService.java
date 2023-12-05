@@ -3,7 +3,6 @@ package dev.waamir.hotelaluraapi.application.service.Resource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,6 +24,7 @@ import dev.waamir.hotelaluraapi.domain.port.IUserRepository;
 import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.ApiException;
 import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.ApiNotFoundException;
 import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.GenericException;
+import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.UserDisabledException;
 import dev.waamir.hotelaluraapi.infrastructure.security.JWT.JwtService;
 import lombok.RequiredArgsConstructor;
 
@@ -87,7 +87,7 @@ public class AuthResourceService {
         User user = userRepository.getByUsername(username).orElseThrow(() -> {
             throw new ApiNotFoundException("User not found.");
         });
-        if (user.isEnabled() == false) throw new DisabledException(null);
+        if (user.isEnabled() != true) throw new UserDisabledException("");
         String jwt = jwtService.generateJwt(user);
         String url = frontHost.concat(String.format("/resetPassword?token=%s", jwt));
         EmailDetails emailDetails = EmailDetails.builder()
