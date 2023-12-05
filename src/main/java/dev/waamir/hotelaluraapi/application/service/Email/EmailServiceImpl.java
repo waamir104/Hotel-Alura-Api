@@ -91,7 +91,7 @@ public class EmailServiceImpl implements IEmailService {
     @Override
     public String getResetPwdConfirmationMessage() {
         try {
-            Resource resource = new ClassPathResource("templates/Email/ResetPwdEmailTemplate.html");
+            Resource resource = new ClassPathResource("templates/Email/ConfirmationResetPwdEmailTemplate.html");
             byte[] bytes = FileCopyUtils.copyToByteArray(resource.getInputStream());
             String body = new String(bytes, StandardCharsets.UTF_8);
             body = body.replace("${home-url}", frontHost);
