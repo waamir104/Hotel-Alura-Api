@@ -52,6 +52,7 @@ public class UserResource {
             .username(request.username())
             .password(request.password())
             .createdAt(LocalDateTime.now())
+            .enabled(true)
             .role(role)
             .build();
         user = userRepository.create(user);
