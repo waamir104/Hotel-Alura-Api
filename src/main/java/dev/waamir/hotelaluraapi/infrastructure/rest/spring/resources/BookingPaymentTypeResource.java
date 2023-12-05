@@ -84,7 +84,7 @@ public class BookingPaymentTypeResource {
             .status(201)
             .body(
                 MessageResponse.builder()
-                    .message(String.format("Booking Payment Type registered with id: ", newBookingPaymentType.getId()))
+                    .message(String.format("Booking Payment Type registered with id: %d", newBookingPaymentType.getId()))
                     .build()
             );
     }
