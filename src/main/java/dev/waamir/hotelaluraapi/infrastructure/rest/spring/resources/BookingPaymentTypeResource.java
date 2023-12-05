@@ -26,6 +26,7 @@ import dev.waamir.hotelaluraapi.domain.port.IBookingRepository;
 import dev.waamir.hotelaluraapi.domain.port.IPaymentTypeRepository;
 import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.ApiNotFoundException;
 import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.GenericException;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
 @RestController
@@ -41,9 +42,9 @@ public class BookingPaymentTypeResource {
 
     @GetMapping("/booking/{id}")
     public ResponseEntity<List<BookingPaymentTypeResponse>> fetchByBooking (
-        @PathVariable Long bookingId
+        @PathVariable Long id
     ){
-        Booking booking = bookingRepository.getById(bookingId).orElseThrow(
+        Booking booking = bookingRepository.getById(id).orElseThrow(
             () -> {
                 throw new ApiNotFoundException("Booking not found.");
             }
@@ -58,7 +59,7 @@ public class BookingPaymentTypeResource {
 
     @PostMapping("/register")
     public ResponseEntity<MessageResponse> register(
-        @RequestBody BookingPaymentTypeRegisterRequest request
+        @RequestBody @Valid BookingPaymentTypeRegisterRequest request
     ) {
         Booking booking = bookingRepository.getById(request.bookingId()).orElseThrow(
             () -> {
@@ -90,7 +91,7 @@ public class BookingPaymentTypeResource {
 
     @PutMapping("/update")
     public ResponseEntity<MessageResponse> update(
-        @RequestBody BookingPaymentTypeUpdateRequest request
+        @RequestBody @Valid BookingPaymentTypeUpdateRequest request
     ) {
         BookingPaymentType bookingPaymentTypeToUpdate = bookingPaymentTypeRepository.getById(request.id()).orElseThrow(
             () -> {
