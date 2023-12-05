@@ -48,3 +48,9 @@ server:
 logging:
   level:
     org.springframework.security: DEBUG
+
+cors:
+  allowed:
+    headers: AUTHORIZATION, CONTENT_TYPE, ACCEPT
+    methods: PUT, POST, GET, DELETE
+  maxAge: 3600
