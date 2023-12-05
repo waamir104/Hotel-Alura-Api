@@ -13,6 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import dev.waamir.hotelaluraapi.adapter.dto.resource.MessageResponse;
 import dev.waamir.hotelaluraapi.adapter.dto.resource.Auth.AuthRequest;
+import dev.waamir.hotelaluraapi.adapter.dto.resource.Auth.AuthResetPwdRequest;
 import dev.waamir.hotelaluraapi.adapter.dto.resource.Auth.AuthResponse;
 import dev.waamir.hotelaluraapi.application.service.Resource.AuthResourceService;
 import jakarta.transaction.Transactional;
@@ -53,11 +54,17 @@ public class AuthResource {
         return ResponseEntity.ok(userResourceService.verify(type, encodedUserId, url));
     }
 
-    @GetMapping("/resetPwd/{username}")
-    public ResponseEntity<MessageResponse> resetPwd(
+    @GetMapping("/resetPwdRequest/{username}")
+    public ResponseEntity<MessageResponse> resetPwdRequest(
         @PathVariable @NotEmpty String username
     ) {
-        // TODO implement the logic
-        return null;
+        return ResponseEntity.ok(userResourceService.resetPwdRequest(username));
+    }
+
+    @PutMapping("/resetPwd")
+    public ResponseEntity<MessageResponse> resetPwd (
+        @RequestBody AuthResetPwdRequest request
+    ) {
+        return ResponseEntity.ok(userResourceService.resetPwd(request));
     }
 }
