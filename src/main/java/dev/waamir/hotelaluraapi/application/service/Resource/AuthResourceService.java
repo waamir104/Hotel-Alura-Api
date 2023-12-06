@@ -10,13 +10,18 @@ import org.springframework.stereotype.Service;
 import static dev.waamir.hotelaluraapi.application.enumeration.RoleType.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import dev.waamir.hotelaluraapi.adapter.dto.resource.MessageResponse;
+import dev.waamir.hotelaluraapi.adapter.dto.resource.Auth.AuthRegisterRequest;
 import dev.waamir.hotelaluraapi.adapter.dto.resource.Auth.AuthRequest;
 import dev.waamir.hotelaluraapi.adapter.dto.resource.Auth.AuthResetPwdRequest;
 import dev.waamir.hotelaluraapi.adapter.dto.resource.Auth.AuthResponse;
+import dev.waamir.hotelaluraapi.adapter.repository.Token.ITokenJpaRepository;
 import dev.waamir.hotelaluraapi.application.model.EmailDetails;
+import dev.waamir.hotelaluraapi.domain.enumeration.TokenType;
 import dev.waamir.hotelaluraapi.domain.model.Role;
+import dev.waamir.hotelaluraapi.domain.model.Token;
 import dev.waamir.hotelaluraapi.domain.model.User;
 import dev.waamir.hotelaluraapi.domain.port.IEmailService;
 import dev.waamir.hotelaluraapi.domain.port.IRoleRepository;
@@ -41,18 +46,21 @@ public class AuthResourceService {
     private final AuthenticationManager authManager;
     private final IEmailService emailService;
     private final PasswordEncoder passwordEncoder;
+    private final ITokenJpaRepository tokenRepository;
 
-    public AuthResponse register(AuthRequest userRequest) {
+    public AuthResponse register(AuthRegisterRequest userRequest) {
+        if (!userRequest.getPassword1().equals(userRequest.getPassword2())) throw new GenericException("Passwords do not match.", HttpStatus.BAD_REQUEST);
         Role role = roleRepository.getByName(GUEST.get())
             .orElseThrow(() -> new ApiException("An error ocurred processing the creation of the user."));
         User user = User.builder()
             .username(userRequest.getUsername())
-            .password(userRequest.getPassword())
+            .password(userRequest.getPassword1())
             .createdAt(LocalDateTime.now())
             .role(role)
             .build();
         user = userRepository.create(user);
         String jwt = jwtService.generateJwt(user);
+        saveUserToken(user, jwt);
         return AuthResponse.builder()
             .token(jwt)
             .role(user.getRole().getName())
@@ -70,6 +78,8 @@ public class AuthResourceService {
         User user = userRepository.getByUsername(userRequest.getUsername())
             .orElseThrow(() -> new ApiException("An error occurred processing the authentication of the user."));
         String jwt = jwtService.generateJwt(user);
+        revokAllUserTokens(user);
+        saveUserToken(user, jwt);
         return AuthResponse.builder()
             .token(jwt)
             .role(user.getRole().getName())
@@ -118,5 +128,26 @@ public class AuthResourceService {
         return MessageResponse.builder()
                 .message("Password reset successfully.")
                 .build();
+    }
+
+    private void saveUserToken(User user, String jwt) {
+        Token token = Token.builder()
+            .user(user)
+            .token(jwt)
+            .tokenType(TokenType.BEARER)
+            .revoked(false)
+            .expired(false)
+            .build();
+        tokenRepository.save(token);
+    }
+
+    private void revokAllUserTokens(User user) {
+        List<Token> validUserTokens = tokenRepository.findAllValidTokensByUser(user.getId());
+        if (validUserTokens.isEmpty()) return;
+        validUserTokens.forEach(t -> {
+            t.setExpired(true);
+            t.setRevoked(true);
+        });
+        tokenRepository.saveAll(validUserTokens);
     }
 }
