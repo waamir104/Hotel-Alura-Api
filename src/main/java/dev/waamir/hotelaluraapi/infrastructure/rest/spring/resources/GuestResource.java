@@ -99,6 +99,7 @@ public class GuestResource {
 		if (userOp.isPresent()) {
 			user = userOp.get();
 			user.setUsername(request.email());
+			userRepository.update(user);
 		}
 		if (Objects.isNull(guest.getIdNumber())) {
 			updatedGuest = Guest.builder()
