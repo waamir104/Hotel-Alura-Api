@@ -11,6 +11,7 @@
 	<groupId>dev.waamir</groupId>
 	<artifactId>hotel-alura-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<name>hotel-alura-api</name>
 	<description>Api for the Hotel Alura</description>
 	<properties>
