@@ -1,4 +1,3 @@
-°  Test UserResource endpoints
 °  Test the mvc configuration
 
 °  Add the logout configuration to the Security Filter Chain Bean and the method implementation
