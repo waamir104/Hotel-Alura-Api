@@ -1,11 +1,15 @@
 package dev.waamir.hotelaluraapi.infrastructure.rest.spring.config;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebMvc
@@ -15,25 +19,28 @@ public class WebConfig {
     private String frontHost;
 
     @Value("${cors.allowed.methods}")
-    private String[] methods;
+    private List<String> methods;
 
     @Value("${cors.maxAge}")
     private Long maxAge;
 
     @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry
-                .addMapping("/**")
-                // Change to the frontHost
-                .allowedOrigins("*")
-                .allowedHeaders("*")
-                .allowedMethods(methods)
-                .allowCredentials(true)
-                .maxAge(maxAge);
-            }
-        };
+    public CorsConfigurationSource corsConfiguration() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.applyPermitDefaultValues();
+        corsConfiguration.setAllowCredentials(true);
+        corsConfiguration.setAllowedMethods(methods);
+        corsConfiguration.setAllowedOrigins(List.of("*"));
+        corsConfiguration.setAllowedHeaders(List.of("*"));
+        corsConfiguration.setExposedHeaders(List.of("*"));
+        corsConfiguration.setMaxAge(3600L);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", corsConfiguration);
+        return source;
+    }
+
+    @Bean 
+    public CorsFilter corsWebFilter() {
+        return new CorsFilter(corsConfiguration());
     }
 }
