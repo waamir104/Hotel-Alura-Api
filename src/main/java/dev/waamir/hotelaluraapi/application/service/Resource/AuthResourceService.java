@@ -49,7 +49,7 @@ public class AuthResourceService {
     private final ITokenJpaRepository tokenRepository;
 
     public AuthResponse register(AuthRegisterRequest userRequest) {
-        if (!userRequest.getPassword1().equals(userRequest.getPassword2())) throw new GenericException("Passwords do not match.", HttpStatus.BAD_REQUEST);
+        if (!userRequest.getPassword1().equals(userRequest.getPassword2())) throw new GenericException("Passwords do not match.", HttpStatus.BAD_REQUEST, null);
         Role role = roleRepository.getByName(GUEST.get())
             .orElseThrow(() -> new ApiException("An error ocurred processing the creation of the user."));
         User user = User.builder()
@@ -115,8 +115,8 @@ public class AuthResourceService {
         User user = userRepository.getByUsername(request.username()).orElseThrow(() -> {
             throw new ApiNotFoundException("User not found.");
         });
-        if (!jwtService.isTokenValid(request.token(), user)) throw new GenericException("Token invalid.", HttpStatus.BAD_REQUEST);
-        if (!request.password1().equals(request.password2())) throw new GenericException("Passwords do not match.", HttpStatus.BAD_REQUEST);
+        if (!jwtService.isTokenValid(request.token(), user)) throw new GenericException("Token invalid.", HttpStatus.BAD_REQUEST, null);
+        if (!request.password1().equals(request.password2())) throw new GenericException("Passwords do not match.", HttpStatus.BAD_REQUEST, null);
         user.setPassword(passwordEncoder.encode(request.password1()));
         userRepository.update(user);
         EmailDetails emailDetails = EmailDetails.builder()
