@@ -93,7 +93,7 @@ public class ExceptionHandlerAdvice {
             .status(e.getStatus())
             .body(
                 MessageResponse.builder()
-                    .message(e.getMessage())
+                    .message(e.getMyMessage())
                     .build()
             );
     }

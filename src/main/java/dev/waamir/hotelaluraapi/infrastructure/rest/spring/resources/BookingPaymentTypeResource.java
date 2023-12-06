@@ -73,7 +73,7 @@ public class BookingPaymentTypeResource {
         );
         double totalPaymentPercentage = booking.getBookingPaymentTypes().stream()
             .mapToDouble(BookingPaymentType::getPaymentPercentage).sum();
-        if (request.paymentPercentage() > (100 - totalPaymentPercentage)) throw new GenericException("The payment percentage exceeds the limit.", HttpStatus.BAD_REQUEST);
+        if (request.paymentPercentage() > (100 - totalPaymentPercentage)) throw new GenericException("The payment percentage exceeds the limit.", HttpStatus.BAD_REQUEST, null);
         BookingPaymentType newBookingPaymentType = BookingPaymentType.builder()
             .paymentPercentage(request.paymentPercentage())
             .booking(booking)
@@ -109,7 +109,7 @@ public class BookingPaymentTypeResource {
             .mapToDouble(BookingPaymentType::getPaymentPercentage)
             .sum();
         totalPaymentPercentage += request.paymentPercentage();
-        if (totalPaymentPercentage > 100) throw new GenericException("The payment percentage exceeds the limit.", HttpStatus.BAD_REQUEST);
+        if (totalPaymentPercentage > 100) throw new GenericException("The payment percentage exceeds the limit.", HttpStatus.BAD_REQUEST, null);
         bookingPaymentTypeToUpdate.setPaymentPercentage(request.paymentPercentage());
         bookingPaymentTypeToUpdate.setPaymentType(paymentType);
         bookingPaymentTypeRepository.update(bookingPaymentTypeToUpdate);

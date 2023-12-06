@@ -72,7 +72,7 @@ public class RoomTypeResource {
                 throw new ApiNotFoundException("Room Type not found.");
             }
         );
-        if (!roomType.getRooms().isEmpty()) throw new GenericException("Cannot delete Room Type.", HttpStatus.CONFLICT);
+        if (!roomType.getRooms().isEmpty()) throw new GenericException("Cannot delete Room Type.", HttpStatus.CONFLICT, null);
         roomTypeRepository.delete(roomType);
         return ResponseEntity
             .status(200)

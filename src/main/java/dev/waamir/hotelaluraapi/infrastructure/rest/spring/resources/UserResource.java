@@ -47,7 +47,7 @@ public class UserResource {
     public ResponseEntity<MessageResponse> register (
         @RequestBody @Valid UserRegisterRequest request
     ) {
-        if(!request.password1().equals(request.password2())) throw new GenericException("Passwords do not match.", HttpStatus.BAD_REQUEST);
+        if(!request.password1().equals(request.password2())) throw new GenericException("Passwords do not match.", HttpStatus.BAD_REQUEST, null);
         if (userRepository.getUsernameCount(request.username()) != 0) throw new DuplicateRecordException("User already exists.");
         Role role = roleRepository.getById(request.roleId()).orElseThrow(
             () -> {
