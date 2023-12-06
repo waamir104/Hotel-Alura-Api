@@ -27,7 +27,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Table(name = "tokens")
-@Entity(name = "token")
+@Entity(name = "Token")
 @EqualsAndHashCode(of = "id")
 public class Token {
     
