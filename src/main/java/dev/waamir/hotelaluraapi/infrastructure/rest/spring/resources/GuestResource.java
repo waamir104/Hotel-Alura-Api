@@ -23,8 +23,10 @@ import dev.waamir.hotelaluraapi.adapter.dto.resource.Guest.GuestDto;
 import dev.waamir.hotelaluraapi.application.enumeration.EmailType;
 import dev.waamir.hotelaluraapi.application.model.EmailDetails;
 import dev.waamir.hotelaluraapi.domain.model.Guest;
+import dev.waamir.hotelaluraapi.domain.model.User;
 import dev.waamir.hotelaluraapi.domain.port.IEmailService;
 import dev.waamir.hotelaluraapi.domain.port.IGuestRepository;
+import dev.waamir.hotelaluraapi.domain.port.IUserRepository;
 import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.DuplicateRecordException;
 import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.ApiNotFoundException;
 import jakarta.validation.constraints.Email;
@@ -42,6 +44,8 @@ public class GuestResource {
 	private IGuestRepository<Guest> guestRepository;
 	@Autowired
 	private IEmailService emailService;
+	@Autowired
+	private IUserRepository<User> userRepository;
 	
 	@PostMapping("/register")
 	public ResponseEntity<MessageResponse> register(
@@ -89,6 +93,12 @@ public class GuestResource {
 			);
 		} else {
 			guest = guestOp.get();
+		}
+		User user;
+		Optional<User> userOp = userRepository.getByUsername(guest.getEmail());
+		if (userOp.isPresent()) {
+			user = userOp.get();
+			user.setUsername(request.email());
 		}
 		if (Objects.isNull(guest.getIdNumber())) {
 			updatedGuest = Guest.builder()
