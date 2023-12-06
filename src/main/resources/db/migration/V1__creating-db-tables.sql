@@ -48,6 +48,20 @@ CREATE TABLE `account_verifications` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
+-- Table structure for table `tokens`
+--
+
+CREATE TABLE `tokens` (
+  `token_id` BIGINT NOT NULL AUTO_INCREMENT,
+  `user_id` BIGINT NOT NULL,
+  `token` VARCHAR(255) DEFAULT NULL,
+  `expired` BOOLEAN DEFAULT FALSE,
+  `revoked` BOOLEAN DEFAULT FALSE,
+  PRIMARY KEY (`token_id`),
+  CONSTRAINT `FK_tokens_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
 -- Table structure for table `payment_types`
 --
 
