@@ -1,5 +1,6 @@
 package dev.waamir.hotelaluraapi.adapter.repository.User;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -140,7 +141,14 @@ public class UserRepositoryImpl implements IUserRepository<User>{
     @Override
     public List<User> list() {
         try {
-            return jdbc.query(SELECT_ALL_USERS_QUERY, new MapSqlParameterSource(), new BeanPropertyRowMapper<>(User.class));
+            List<User> usersNoRole = jdbc.query(SELECT_ALL_USERS_QUERY, new MapSqlParameterSource(), new BeanPropertyRowMapper<>(User.class));
+            List<User> users = new ArrayList<User>();
+            usersNoRole.stream().forEach(userNoRole -> {
+                Role wantedRole = Objects.requireNonNull(roleRepository.getByUser(userNoRole).get());
+                userNoRole.setRole(wantedRole);
+                users.add(userNoRole);
+            });
+            return users;
         } catch (Exception e) {
             throw new ApiException("An error ocurred listing the users. Please try again. \n\n" + e.getMessage());
         }
