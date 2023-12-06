@@ -1,4 +1,3 @@
 °  Test the mvc configuration
 
 °  Add the logout configuration to the Security Filter Chain Bean and the method implementation
-°  Finish the set up of the CORS configuration - Add dependencies
