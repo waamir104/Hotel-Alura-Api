@@ -17,6 +17,16 @@ ALTER TABLE `roles`
     MODIFY `role_id` BIGINT NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 4;
 
 --
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`enabled`, `created_at`, `role_id`, `user_id`, `email`, `password`) VALUES
+    (true, CURRENT_DATE(), 2, 1, 'wspea4@soy.sena.edu.co', "$2a$10$NTMaZFBxnWpMk1iCcw0QX.j2JlfrIeP0VngsUabtJs8i744Q7kodm");
+
+ALTER TABLE `users`
+    MODIFY `user_id` BIGINT NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 2;
+
+--
 -- Dumping data for table `payment_types`
 --
 
