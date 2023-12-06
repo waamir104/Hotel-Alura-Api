@@ -7,7 +7,9 @@ public record UserRegisterRequest(
     @NotEmpty
     String username,
     @NotEmpty
-    String password,
+    String password1,
+    @NotEmpty
+    String password2,
     @NotNull
     Long roleId
 ) {

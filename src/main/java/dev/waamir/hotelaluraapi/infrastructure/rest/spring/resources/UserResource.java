@@ -4,8 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +24,7 @@ import dev.waamir.hotelaluraapi.domain.port.IRoleRepository;
 import dev.waamir.hotelaluraapi.domain.port.IUserRepository;
 import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.ApiNotFoundException;
 import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.DuplicateRecordException;
+import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.GenericException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -42,6 +42,7 @@ public class UserResource {
     public ResponseEntity<MessageResponse> register (
         @RequestBody @Valid UserRegisterRequest request
     ) {
+        if(!request.password1().equals(request.password2())) throw new GenericException("Passwords do not match.", HttpStatus.BAD_REQUEST);
         if (userRepository.getUsernameCount(request.username()) != 0) throw new DuplicateRecordException("User already exists.");
         Role role = roleRepository.getById(request.roleId()).orElseThrow(
             () -> {
@@ -50,7 +51,7 @@ public class UserResource {
         );
         User user = User.builder()
             .username(request.username())
-            .password(request.password())
+            .password(request.password1())
             .createdAt(LocalDateTime.now())
             .enabled(true)
             .role(role)
@@ -66,9 +67,7 @@ public class UserResource {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<UserResponse>> list (
-        @PageableDefault(size = 10) Pageable pagination
-    ) {
+    public ResponseEntity<List<UserResponse>> list () {
         return ResponseEntity
             .status(200)
             .body(
