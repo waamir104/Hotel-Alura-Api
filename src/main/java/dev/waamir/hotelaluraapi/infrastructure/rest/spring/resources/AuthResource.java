@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.waamir.hotelaluraapi.adapter.dto.resource.MessageResponse;
+import dev.waamir.hotelaluraapi.adapter.dto.resource.Auth.AuthRegisterRequest;
 import dev.waamir.hotelaluraapi.adapter.dto.resource.Auth.AuthRequest;
 import dev.waamir.hotelaluraapi.adapter.dto.resource.Auth.AuthResetPwdRequest;
 import dev.waamir.hotelaluraapi.adapter.dto.resource.Auth.AuthResponse;
@@ -33,7 +34,7 @@ public class AuthResource {
     @PostMapping("/register")
     @Transactional
     public ResponseEntity<AuthResponse> register(
-        @RequestBody AuthRequest userRequest
+        @RequestBody AuthRegisterRequest userRequest
     ) {
         return ResponseEntity
             .status(HttpStatus.CREATED)
