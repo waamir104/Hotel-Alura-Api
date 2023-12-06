@@ -2,6 +2,7 @@ package dev.waamir.hotelaluraapi.infrastructure.rest.spring.resources;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,8 +19,10 @@ import dev.waamir.hotelaluraapi.adapter.dto.resource.MessageResponse;
 import dev.waamir.hotelaluraapi.adapter.dto.resource.User.UserRegisterRequest;
 import dev.waamir.hotelaluraapi.adapter.dto.resource.User.UserResponse;
 import dev.waamir.hotelaluraapi.adapter.dto.resource.User.UserUpdateRequest;
+import dev.waamir.hotelaluraapi.domain.model.Guest;
 import dev.waamir.hotelaluraapi.domain.model.Role;
 import dev.waamir.hotelaluraapi.domain.model.User;
+import dev.waamir.hotelaluraapi.domain.port.IGuestRepository;
 import dev.waamir.hotelaluraapi.domain.port.IRoleRepository;
 import dev.waamir.hotelaluraapi.domain.port.IUserRepository;
 import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.ApiNotFoundException;
@@ -37,6 +40,8 @@ public class UserResource {
     private IUserRepository<User> userRepository;
     @Autowired
     private IRoleRepository<Role> roleRepository;
+    @Autowired
+    private IGuestRepository<Guest> guestRepository;
 
     @PostMapping("/register")
     public ResponseEntity<MessageResponse> register (
@@ -121,6 +126,15 @@ public class UserResource {
                 throw new ApiNotFoundException("Role not found.");
             }
         );
+        if (role.getName().equals("GUEST")) {
+            Guest guest;
+            Optional<Guest> guestOp = guestRepository.getByEmail(user.getUsername());
+            if (guestOp.isPresent()) {
+                guest = guestOp.get();
+                guest.setEmail(request.username());
+                guestRepository.update(guest);
+            }
+        }
         user.setUsername(request.username());
         user.setRole(role);
         userRepository.update(user);
