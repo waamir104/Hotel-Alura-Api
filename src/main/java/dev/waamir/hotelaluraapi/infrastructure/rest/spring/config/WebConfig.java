@@ -14,9 +14,6 @@ public class WebConfig {
     @Value("${application.front-end.host}")
     private String frontHost;
 
-    @Value("${cors.allowed.headers}")
-    private String[] headers;
-
     @Value("${cors.allowed.methods}")
     private String[] methods;
 
@@ -32,7 +29,7 @@ public class WebConfig {
                 .addMapping("/**")
                 // Change to the frontHost
                 .allowedOrigins("*")
-                .allowedHeaders(headers)
+                .allowedHeaders("*")
                 .allowedMethods(methods)
                 .allowCredentials(true)
                 .maxAge(maxAge);
