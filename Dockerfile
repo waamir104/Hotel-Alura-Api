@@ -10,8 +10,8 @@ COPY . /app
 # Ejecutar Maven para construir el proyecto
 RUN mvn clean package
 
-# Crear una nueva imagen basada en OpenJDK 17
-FROM adoptopenjdk:17-jre-hotspot-buster
+# Crear una nueva imagen basada en AdoptOpenJDK 17
+FROM openjdk:17
 
 # Exponer el puerto que utilizará la aplicación
 EXPOSE 8090
