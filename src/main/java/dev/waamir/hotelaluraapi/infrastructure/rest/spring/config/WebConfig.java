@@ -30,7 +30,8 @@ public class WebConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry
                 .addMapping("/**")
-                .allowedOrigins(frontHost)
+                // Change to the frontHost
+                .allowedOrigins("*")
                 .allowedHeaders(headers)
                 .allowedMethods(methods)
                 .allowCredentials(true)
