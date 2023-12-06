@@ -130,6 +130,7 @@ public class UserRepositoryImpl implements IUserRepository<User>{
             SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("roleId", user.getRole().getId())
                 .addValue("enabled", user.isEnabled())
+                .addValue("email", user.getUsername())
                 .addValue("id", user.getId())
                 .addValue("password", user.getPassword());
             jdbc.update(UPDATE_USER_QUERY, parameters);

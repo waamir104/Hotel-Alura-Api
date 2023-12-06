@@ -22,6 +22,7 @@ public class UserQueries {
             UPDATE users SET
             role_id = :roleId,
             enabled = :enabled,
+            email = :email,
             password = :password
             WHERE user_id = :id;
             """;
