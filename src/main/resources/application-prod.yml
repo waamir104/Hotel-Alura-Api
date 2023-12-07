@@ -1,0 +1,47 @@
+application:
+  title: Hotel Alura Api
+  version: 1.0
+  # TODO Change to production host
+  front-end:
+    host: https://waamir.dev
+
+  security:
+    jwt:
+      secret:
+        key: ${JWT_SECRET_KEY}
+
+spring:
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PWD}
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${EMAIL_USERNAME}
+    password: ${EMAIL_PWD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+        
+server:
+  port: 8080
+  servlet:
+    encoding:
+      enabled: true
+      charset: UTF-8
+
+cors:
+  allowed:
+    methods: PUT, POST, GET, DELETE
+  maxAge: 3600
