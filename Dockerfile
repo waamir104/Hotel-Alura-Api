@@ -14,10 +14,10 @@ RUN mvn clean package
 FROM openjdk:17
 
 # Exponer el puerto que utilizará la aplicación
-EXPOSE 8090
+EXPOSE 8080
 
 # Copiar el archivo JAR construido desde la etapa anterior
-COPY "./Hotel-Alura-Api.jar" "./Hotel-Alura-Api.jar"
+COPY --from=build /app/target/hotel-alura-api-1.0.jar /app/hotel-alura-api-1.0.jar
 
 # Establecer el punto de entrada para ejecutar la aplicación
-ENTRYPOINT ["java", "-jar", "/app/Hotel-Alura-Api.jar"]
+ENTRYPOINT ["java", "-jar", "/app/hotel-alura-api-1.0.jar"]
