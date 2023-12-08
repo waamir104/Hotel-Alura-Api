@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>dev.waamir</groupId>
 	<artifactId>hotel-alura-api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0</version>
 	<packaging>jar</packaging>
 	<name>hotel-alura-api</name>
 	<description>Api for the Hotel Alura</description>
