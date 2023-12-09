@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.waamir.hotelaluraapi.adapter.dto.resource.MessageResponse;
+import dev.waamir.hotelaluraapi.adapter.dto.resource.Room.RoomDto;
 import dev.waamir.hotelaluraapi.adapter.dto.resource.RoomType.RoomTypeRegisterRequest;
 import dev.waamir.hotelaluraapi.adapter.dto.resource.RoomType.RoomTypeResponse;
 import dev.waamir.hotelaluraapi.adapter.dto.resource.RoomType.RoomTypeUpdateRequest;
@@ -25,6 +26,7 @@ import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.DuplicateRe
 import dev.waamir.hotelaluraapi.infrastructure.rest.spring.exception.GenericException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+
 
 @RestController
 @RequestMapping("/api/v1/roomType")
@@ -42,6 +44,21 @@ public class RoomTypeResource {
                 roomTypeRepository.list().stream().map(RoomTypeResponse::new).toList()
             );
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<RoomTypeResponse> getMethodName(@PathVariable Long id) {
+        RoomType roomType = roomTypeRepository.getById(id).orElseThrow(
+            () -> {
+                throw new ApiNotFoundException("Room Type not found.");
+            }
+        );
+        return ResponseEntity
+            .status(200)
+            .body(
+                new RoomTypeResponse(roomType)
+            );
+    }
+    
 
     @PostMapping("/register")
     public ResponseEntity<MessageResponse> register (
