@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.waamir.hotelaluraapi.adapter.dto.resource.MessageResponse;
-import dev.waamir.hotelaluraapi.adapter.dto.resource.Room.RoomDto;
 import dev.waamir.hotelaluraapi.adapter.dto.resource.RoomType.RoomTypeRegisterRequest;
 import dev.waamir.hotelaluraapi.adapter.dto.resource.RoomType.RoomTypeResponse;
 import dev.waamir.hotelaluraapi.adapter.dto.resource.RoomType.RoomTypeUpdateRequest;
