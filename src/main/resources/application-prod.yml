@@ -3,7 +3,7 @@ application:
   version: 1.0
   # TODO Change to production host
   front-end:
-    host: https://waamir.dev
+    host: http://localhost:4200
 
   security:
     jwt:

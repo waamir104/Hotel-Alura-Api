@@ -1,5 +1,6 @@
 package dev.waamir.hotelaluraapi.infrastructure.rest.spring.config;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -30,9 +31,15 @@ public class WebConfig {
         corsConfiguration.applyPermitDefaultValues();
         corsConfiguration.setAllowCredentials(true);
         corsConfiguration.setAllowedMethods(methods);
-        corsConfiguration.setAllowedOrigins(List.of("*"));
-        corsConfiguration.setAllowedHeaders(List.of("*"));
-        corsConfiguration.setExposedHeaders(List.of("*"));
+        corsConfiguration.setAllowedOrigins(Arrays.asList(frontHost));
+        corsConfiguration.setAllowedHeaders(Arrays.asList(
+            "Origin", "Access-Controll-Allow-Origin", "Content-Type", "Accept", "Jwt-Token",
+            "Authorization", "Origin, Accept", "X-Requested-With", "Access-Control-Request-Method", "Accerss-Control-Request-Headers"
+        ));
+        corsConfiguration.setExposedHeaders(Arrays.asList(
+            "Origin", "Access-Controll-Allow-Origin", "Content-Type", "Accept", "Jwt-Token",
+            "Authorization", "Access-Control-Allow-Credentials", "File-Name"
+        ));
         corsConfiguration.setMaxAge(3600L);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfiguration);
